@@ -1,16 +1,18 @@
 #include "push_swap.h"
 
-int random_int(int min, int max)
-{
-	return min + rand() % (max - min + 1);
-}
-
 void stack_swap_indexes(int **stack, int i1, int i2) {
 	int	temp;
 	
 	temp = (*stack)[i1];
 	(*stack)[i1] = (*stack)[i2];
 	(*stack)[i2] = temp;
+}
+
+//------------------------------ Tests e simili
+
+int random_int(int min, int max)
+{
+	return min + rand() % (max - min + 1);
 }
 
 void stack_create(int **ptr, int size, int minstep, int maxstep, int shuffles) {
