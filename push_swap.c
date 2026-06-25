@@ -4,6 +4,7 @@ typedef struct s_stack
 {
 	int *content;
 	int current_size;
+	int max_size;
 }	t_stack;
 
 
@@ -31,6 +32,7 @@ int *array_append(int *arr, int arr_size, int value) {
 		i++;
 	}
 	out[i] = value;
+	free(arr);
 	return out;
 }
 
@@ -48,13 +50,14 @@ int *array_prepend(int *arr, int arr_size, int value) {
 		out[i+1] = arr[i];
 		i++;
 	}
+	free(arr);
 	return out;
 }
 
-int array_rm_index(int *arr, int index)
+int *array_rm_index(int *arr, int arr_size, int index)
 {
 	int i;
-	int *out;	
+	int *out;
 	
 	out = malloc((arr_size - 1)*sizeof(int));
 	if (!out)
@@ -62,47 +65,82 @@ int array_rm_index(int *arr, int index)
 	i = 0;
 	while (i < arr_size-1)
 	{
-		out[i] = arr[i+(i>index)];
+		out[i] = arr[i+(i>=index)];
 		i++;
 	}
+	free(arr);
+	return out;
+}
+
+int *array_rotate(int *arr, int arr_size, int times)
+{
+	int i;
+	int shift;
+	int *out;
+
+	if (!arr || arr_size <= 0)
+		return NULL;
+	shift = times % arr_size;
+	if (shift < 0)
+		shift += arr_size;
+	out = malloc(arr_size * sizeof(int));
+	if (!out)
+		return (NULL);
+	i = 0;
+	while (i < arr_size)
+	{
+		out[i] = arr[(i + shift) % arr_size];
+		i++;
+	}
+	free(arr);
 	return out;
 }
 
 //-------------------ULTRABASIC STACK MANIP FUNCS
-void stack_append(t_stack *stack, int value)
+void stack_append(t_stack *stackpt, int value)
 {
-	stack->content = array_append(stack->content, stack->current_size, value);
-	stack->current_size++;	
+	stackpt->content = array_append(stackpt->content, stackpt->current_size, value);
+	stackpt->current_size++;	
 }
 
-void stack_prepend(t_stack *stack, int value)
+void stack_prepend(t_stack *stackpt, int value)
 {
-	stack->content = array_prepend(stack->content, stack->current_size, value);
-	stack->current_size++;	
+	stackpt->content = array_prepend(stackpt->content, stackpt->current_size, value);
+	stackpt->current_size++;	
 }
 
-void stack_rm_index(t_stack *stack, int index)
+void stack_rm_index(t_stack *stackpt, int index)
 {
-	
+	stackpt->content = array_rm_index(stackpt->content, stackpt->current_size, index);
+	stackpt->current_size--;
 }
 
+void stack_rotate(t_stack *stackpt, int times)
+{
+	stackpt->content = array_rotate(stackpt->content, stackpt->current_size, times);
+}
 //void stack_swap_indexes(t_stack main, t_stack stache, i1, i2)
 //{	
 //}
 
 //-------------------BASIC STACK MANIP FUNCS
-void s(t_stack stack) //ok!
+void s(t_stack *stackpt) //ok!
 {
-	if (stack.current_size >= 2)
-		array_swap_indexes(&(stack.content), 0, 1);
+	if (stackpt->current_size >= 2)
+		array_swap_indexes(&(stackpt->content), 0, 1);
 }
 
-void p(t_stack from, t_stack to)
+void p(t_stack *from_stackpt, t_stack *to_stackpt)
 {
-	if (from.current_size != 0) {
-		stack_prepend(&(to), from->content[0]);
-		stack_rm_index(&(to), 0); //TODO
+	if (from_stackpt->current_size != 0) {
+		stack_prepend(to_stackpt, from_stackpt->content[0]);
+		stack_rm_index(from_stackpt, 0);
 	}
+}
+
+void r(t_stack *stackpt, int times)
+{
+	stack_rotate(stackpt, times);
 }
 
 
@@ -163,8 +201,7 @@ int main() {
 	
 	stack_print(a);
 	printf("\n");
-	stack_prepend(&(a), 892183918);
-	stack_append(&(a), 3213213);
-	//a.content = array_append(a.content, a.current_size, 412414);
+	r(&a, -1);
+	printf("USING R ON A\n--------------------\n A: \n");
 	stack_print(a);
 }
