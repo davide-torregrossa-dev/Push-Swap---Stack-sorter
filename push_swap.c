@@ -4,19 +4,19 @@ typedef struct s_stack
 {
 	int *content;
 	int current_size;
-	int max_size;
+	int offset;
 }	t_stack;
 
 
 //-------------------ARRAY FUNCS
-void array_swap_indexes(int **arr, int i1, int i2) {
+int *array_swap_indexes(int *arr, int i1, int i2) {
 	int	temp;
 	
-	temp = (*arr)[i1];
-	(*arr)[i1] = (*arr)[i2];
-	(*arr)[i2] = temp;
+	temp = arr[i1];
+	arr[i1] = arr[i2];
+	arr[i2] = temp;
+	return arr;
 }
-
 
 int *array_append(int *arr, int arr_size, int value) {
 	int i;
@@ -72,7 +72,31 @@ int *array_rm_index(int *arr, int arr_size, int index)
 	return out;
 }
 
-int *array_rotate(int *arr, int arr_size, int times)
+int *array_rotate(int *arr, int arr_size, int dir)
+{
+	int i;
+	int *out;
+	int offset;
+
+	if (!arr || arr_size <= 0)
+		return NULL;
+	if (dir != -1 && dir != 1)
+		return NULL;
+	out = malloc(arr_size * sizeof(int));
+	if (!out)
+		return NULL;
+	offset = -dir; 
+	i = 0;
+	while (i < arr_size)
+	{
+	out[i] = arr[(i + offset + arr_size) % arr_size];
+		i++;
+	}
+	free(arr);
+	return out;
+}
+
+int *array_rotate_bak(int *arr, int arr_size, int times)
 {
 	int i;
 	int shift;
@@ -124,25 +148,29 @@ void stack_rotate(t_stack *stackpt, int times)
 //}
 
 //-------------------BASIC STACK MANIP FUNCS
-void s(t_stack *stackpt) //ok!
+void s(char stackname, t_stack *stackpt) //ok!
 {
 	if (stackpt->current_size >= 2)
-		array_swap_indexes(&(stackpt->content), 0, 1);
+	{
+		printf("s%c\n", stackname);
+		stackpt->content = array_swap_indexes(stackpt->content, 0, 1);		
+	}
 }
 
-void p(t_stack *from_stackpt, t_stack *to_stackpt)
+void p(char stackname, t_stack *from_stackpt, t_stack *to_stackpt)
 {
 	if (from_stackpt->current_size != 0) {
+		printf("p%c\n", stackname);
 		stack_prepend(to_stackpt, from_stackpt->content[0]);
 		stack_rm_index(from_stackpt, 0);
 	}
 }
 
-void r(t_stack *stackpt, int times)
+void r(char stackname, t_stack *stackpt, int times)
 {
+	printf("r%c\n", stackname);
 	stack_rotate(stackpt, times);
 }
-
 
 //------------------------------ Tests e simili
 
@@ -158,6 +186,7 @@ void stack_init(t_stack *stack, int size, int minstep, int maxstep, int shuffles
 	
 	srand(time(NULL));
 	stack->content = malloc(size * sizeof(int));
+	stack->offset = 0;
 	if (stack->content == NULL)
 		return;
 	while (i < size) {
@@ -168,7 +197,7 @@ void stack_init(t_stack *stack, int size, int minstep, int maxstep, int shuffles
 	stack->current_size = size;
 	i = 0;
 	while (i < shuffles) {
-		array_swap_indexes(&(stack->content), random_int(0, size-1), random_int(0, size-1));
+		stack->content = array_swap_indexes(stack->content, random_int(0, size-1), random_int(0, size-1));
 		i++;
 	}
 }
@@ -192,16 +221,10 @@ int main() {
 	int a_size;
 
 	a_size = 5;
-	stack_init(&(a), a_size, 1, 10, a_size*2);
+	stack_init(&a, a_size, 1, 10, a_size*2);
 	if (!a.content)
 		return 0;
 
 	b.content = NULL;
 	b.current_size = 0;
-	
-	stack_print(a);
-	printf("\n");
-	r(&a, -1);
-	printf("USING R ON A\n--------------------\n A: \n");
-	stack_print(a);
 }
