@@ -1,10 +1,13 @@
 #include "push_swap.h"
 
+//Integrare offset, pivot e safenums (o sorter struct).
+
 typedef struct s_stack
 {
 	int *content;
 	int current_size;
 	int offset;
+	char name;
 }	t_stack;
 
 
@@ -96,29 +99,6 @@ int *array_rotate(int *arr, int arr_size, int dir)
 	return out;
 }
 
-int *array_rotate_bak(int *arr, int arr_size, int times)
-{
-	int i;
-	int shift;
-	int *out;
-
-	if (!arr || arr_size <= 0)
-		return NULL;
-	shift = times % arr_size;
-	if (shift < 0)
-		shift += arr_size;
-	out = malloc(arr_size * sizeof(int));
-	if (!out)
-		return (NULL);
-	i = 0;
-	while (i < arr_size)
-	{
-		out[i] = arr[(i + shift) % arr_size];
-		i++;
-	}
-	free(arr);
-	return out;
-}
 
 //-------------------ULTRABASIC STACK MANIP FUNCS
 void stack_append(t_stack *stackpt, int value)
@@ -148,28 +128,38 @@ void stack_rotate(t_stack *stackpt, int times)
 //}
 
 //-------------------BASIC STACK MANIP FUNCS
-void s(char stackname, t_stack *stackpt) //ok!
+void s(t_stack *stackpt)
 {
 	if (stackpt->current_size >= 2)
 	{
-		printf("s%c\n", stackname);
+		printf("s%c\n", stackpt->name);
 		stackpt->content = array_swap_indexes(stackpt->content, 0, 1);		
 	}
 }
 
-void p(char stackname, t_stack *from_stackpt, t_stack *to_stackpt)
+void p(t_stack *from_stackpt, t_stack *to_stackpt)
 {
-	if (from_stackpt->current_size != 0) {
-		printf("p%c\n", stackname);
+	if (from_stackpt->current_size != 0) 
+	{
+		printf("p%c\n", from_stackpt->name);
 		stack_prepend(to_stackpt, from_stackpt->content[0]);
 		stack_rm_index(from_stackpt, 0);
 	}
 }
 
-void r(char stackname, t_stack *stackpt, int times)
+void r(t_stack *stackpt, int times)
 {
-	printf("r%c\n", stackname);
-	stack_rotate(stackpt, times);
+	int dir;
+
+	dir = ((times < 0)*2)-1;
+	
+	while (times != 0) 
+	{
+		printf("r%c\n", stackpt->name);
+		//printf("%d", times);
+		stack_rotate(stackpt, dir);
+		times += dir;
+	}
 }
 
 //------------------------------ Tests e simili
@@ -219,7 +209,8 @@ int main() {
 	t_stack a;
 	t_stack b;
 	int a_size;
-
+	
+	a.name = 'a';
 	a_size = 5;
 	stack_init(&a, a_size, 1, 10, a_size*2);
 	if (!a.content)
@@ -227,4 +218,11 @@ int main() {
 
 	b.content = NULL;
 	b.current_size = 0;
+	b.name = 'b';
+	
+	stack_print(a);
+	printf("\n");
+	r(&a, 3);
+	printf("\n");
+	stack_print(a);
 }
