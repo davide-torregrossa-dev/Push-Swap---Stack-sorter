@@ -195,12 +195,14 @@ void stack_init(t_stack *stack, int size, int minstep, int maxstep, int shuffles
 void stack_print(t_stack stack)
 {
 	int i;
-
 	i = 0;
-	while (i < stack.current_size) {	
-		printf("%d\n", stack.content[i]);
+	printf("-----------------\n");
+	while (i < stack.current_size) {
+		printf("|%c%d\t%d\t|\n", stack.name-32, i, stack.content[i]);
+
 		i++;
 	}
+	printf("-----------------\n");
 }
 
 
@@ -222,7 +224,8 @@ int main() {
 	
 	stack_print(a);
 	printf("\n");
-	r(&a, 3);
+	p(&a, &b);
 	printf("\n");
 	stack_print(a);
+	stack_print(b);
 }
