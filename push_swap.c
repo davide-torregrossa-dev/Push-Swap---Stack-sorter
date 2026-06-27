@@ -1,6 +1,8 @@
 #include "push_swap.h"
 
+//riscrivere array_rotate che è na merda. si rompe con array size dispari.
 //Integrare offset, pivot e safenums (o sorter struct).
+//scrivere e integrare RRR;
 
 typedef struct s_stack
 {
@@ -88,17 +90,17 @@ int *array_rotate(int *arr, int arr_size, int dir)
 	out = malloc(arr_size * sizeof(int));
 	if (!out)
 		return NULL;
+	dir = -dir;
 	offset = -dir; 
 	i = 0;
 	while (i < arr_size)
 	{
-	out[i] = arr[(i + offset + arr_size) % arr_size];
+		out[i] = arr[(i + offset + arr_size) % arr_size];
 		i++;
 	}
 	free(arr);
 	return out;
 }
-
 
 //-------------------ULTRABASIC STACK MANIP FUNCS
 void stack_append(t_stack *stackpt, int value)
@@ -119,13 +121,11 @@ void stack_rm_index(t_stack *stackpt, int index)
 	stackpt->current_size--;
 }
 
-void stack_rotate(t_stack *stackpt, int times)
+void stack_rotate(t_stack *stackpt, int dir)
 {
-	stackpt->content = array_rotate(stackpt->content, stackpt->current_size, times);
+	stackpt->content = array_rotate(stackpt->content, stackpt->current_size, dir);
+	stackpt->offset -= dir;
 }
-//void stack_swap_indexes(t_stack main, t_stack stache, i1, i2)
-//{	
-//}
 
 //-------------------BASIC STACK MANIP FUNCS
 void s(t_stack *stackpt)
@@ -150,52 +150,92 @@ void p(t_stack *from_stackpt, t_stack *to_stackpt)
 void r(t_stack *stackpt, int times)
 {
 	int dir;
+	char *msg;
 
+	msg = "r%c\n";
+	if (times < 0)
+		msg = "rr%c\n";
 	dir = ((times < 0)*2)-1;
-	
 	while (times != 0) 
 	{
-		printf("r%c\n", stackpt->name);
-		//printf("%d", times);
+		printf(msg, stackpt->name);
 		stack_rotate(stackpt, dir);
 		times += dir;
 	}
 }
 
-//------------------------------ Tests e simili
 
+//-------------------ADV STACK MANIP FUNCS
+void stack_swap_indexes(t_stack *mainpt, t_stack *stachept, int i1, int i2)
+{
+	if (!mainpt || mainpt->current_size < 2 || i1 == i2)
+		return ;
+	if (i1 < 0 || i1 >= mainpt->current_size || i2 < 0 || i2 >= mainpt->current_size)
+		return ;
+	if (i1 > i2)
+	{
+		int temp = i1;
+		i1 = i2;
+		i2 = temp;
+	}
+	r(mainpt, i1);
+	p(mainpt, stachept);
+	int r2 = i2 - i1 - 1;
+	r(mainpt, r2);
+	p(mainpt, stachept);
+	s(stachept);
+	p(stachept, mainpt);
+	r(mainpt, -r2);
+	p(stachept, mainpt);
+	r(mainpt, -i1);
+}
+
+void stack_realign(t_stack *stackpt)
+{
+	r(stackpt, -stackpt->offset);
+}
+
+//------------------------------ Tests e simili
 
 int random_int(int min, int max)
 {
 	return min + rand() % (max - min + 1);
 }
 
-void stack_init(t_stack *stack, int size, int minstep, int maxstep, int shuffles) {
+int stack_init(t_stack *stack, char name, int size, int minstep, int maxstep, int shuffles) {
 	int i = 0;
 	int content = 0;
 	
 	srand(time(NULL));
+	stack->name = name;	
 	stack->content = malloc(size * sizeof(int));
 	stack->offset = 0;
 	if (stack->content == NULL)
-		return;
+		return 0;
+	stack->current_size = size;
+	if (size==0)
+		return 1;
+
 	while (i < size) {
 		content += random_int(minstep, maxstep);	
 		stack->content[i] = content;
 		i++;
 	}
-	stack->current_size = size;
 	i = 0;
 	while (i < shuffles) {
 		stack->content = array_swap_indexes(stack->content, random_int(0, size-1), random_int(0, size-1));
 		i++;
 	}
+	return 1;
 }
 
 void stack_print(t_stack stack)
 {
 	int i;
 	i = 0;
+	printf("------[ %c ]------\n", stack.name-32);
+	printf("|curr_size: %d \t|\n", stack.current_size);
+	printf("|offset: %d\t|\n", stack.offset);
 	printf("-----------------\n");
 	while (i < stack.current_size) {
 		printf("|%c%d\t%d\t|\n", stack.name-32, i, stack.content[i]);
@@ -203,6 +243,7 @@ void stack_print(t_stack stack)
 		i++;
 	}
 	printf("-----------------\n");
+
 }
 
 
@@ -210,21 +251,16 @@ void stack_print(t_stack stack)
 int main() {
 	t_stack a;
 	t_stack b;
-	int a_size;
 	
-	a.name = 'a';
-	a_size = 5;
-	stack_init(&a, a_size, 1, 10, a_size*2);
-	if (!a.content)
+	if (!stack_init(&a, 'a', 9, 1, 10, 500))
 		return 0;
-
-	b.content = NULL;
-	b.current_size = 0;
-	b.name = 'b';
+	if (!stack_init(&b, 'b', 0, 0, 0, 0))
+		return 0;
 	
 	stack_print(a);
 	printf("\n");
-	p(&a, &b);
+	stack_swap_indexes(&a, &b, 0, 5);
+	//stack_realign(&a);
 	printf("\n");
 	stack_print(a);
 	stack_print(b);
