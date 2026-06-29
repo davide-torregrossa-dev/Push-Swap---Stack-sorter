@@ -1,14 +1,15 @@
 #include "push_swap.h"
 
-//riscrivere array_rotate che è na merda. si rompe con array size dispari.
-//Integrare offset, pivot e safenums (o sorter struct).
+//stack_swap_indexes è rotta.
+//non toccare array_rotate, ora funziona!
+//Integrare pivot e safenums (o sorter struct).
 //scrivere e integrare RRR;
 
 typedef struct s_stack
 {
 	int *content;
 	int current_size;
-	int offset;
+	int offset;	//Indica l'orientamento della stack, basato su quante volte è stata chiamata una funzione r* su questa)
 	char name;
 }	t_stack;
 
@@ -79,27 +80,28 @@ int *array_rm_index(int *arr, int arr_size, int index)
 
 int *array_rotate(int *arr, int arr_size, int dir)
 {
-	int i;
-	int *out;
-	int offset;
+    int i;
+    int temp;
 
-	if (!arr || arr_size <= 0)
-		return NULL;
-	if (dir != -1 && dir != 1)
-		return NULL;
-	out = malloc(arr_size * sizeof(int));
-	if (!out)
-		return NULL;
-	dir = -dir;
-	offset = -dir; 
-	i = 0;
-	while (i < arr_size)
-	{
-		out[i] = arr[(i + offset + arr_size) % arr_size];
-		i++;
-	}
-	free(arr);
-	return out;
+    if (arr == NULL || arr_size <= 1)
+        return arr;
+    if (dir == 1)
+    {
+        temp = arr[0];
+        i = -1;
+        while (++i < arr_size - 1)
+            arr[i] = arr[i + 1];
+        arr[arr_size - 1] = temp;
+    }
+    else
+    {
+        temp = arr[arr_size - 1];
+        i = arr_size;
+        while (--i > 0)
+            arr[i] = arr[i - 1];
+        arr[0] = temp;
+    }
+    return arr;
 }
 
 //-------------------ULTRABASIC STACK MANIP FUNCS
@@ -164,30 +166,48 @@ void r(t_stack *stackpt, int times)
 	}
 }
 
+/*
+void rrr(t_stack *stack_apt, t_stack *stack_bpt, int times) {
+	int dir;
+
+	dir = ((times < 0)*2)-1;
+	while (times != 0) {	
+		printf("rrr->");
+		r(stack_bpt, times);
+		printf("rrr->");
+		r(stack_bpt, times);
+		times += dir;
+	}
+}
+*/
 
 //-------------------ADV STACK MANIP FUNCS
+
 void stack_swap_indexes(t_stack *mainpt, t_stack *stachept, int i1, int i2)
 {
-	if (!mainpt || mainpt->current_size < 2 || i1 == i2)
-		return ;
-	if (i1 < 0 || i1 >= mainpt->current_size || i2 < 0 || i2 >= mainpt->current_size)
-		return ;
-	if (i1 > i2)
-	{
-		int temp = i1;
-		i1 = i2;
-		i2 = temp;
-	}
-	r(mainpt, i1);
-	p(mainpt, stachept);
-	int r2 = i2 - i1 - 1;
-	r(mainpt, r2);
-	p(mainpt, stachept);
-	s(stachept);
-	p(stachept, mainpt);
-	r(mainpt, -r2);
-	p(stachept, mainpt);
-	r(mainpt, -i1);
+    int temp;
+    int r2;
+
+    if (!mainpt || mainpt->current_size < 2 || i1 == i2)
+        return;
+    if (i1 < 0 || i1 >= mainpt->current_size || i2 < 0 || i2 >= mainpt->current_size)
+        return;
+    if (i1 > i2)
+    {
+        temp = i1;
+        i1 = i2;
+        i2 = temp;
+    }
+    r(mainpt, i1);
+    p(mainpt, stachept);
+    r2 = i2 - i1 - 1;
+    r(mainpt, r2);
+    p(mainpt, stachept);
+    s(stachept);
+    p(stachept, mainpt);
+    r(mainpt, -r2);
+    r(mainpt, -i1);
+    p(stachept, mainpt);
 }
 
 void stack_realign(t_stack *stackpt)
@@ -252,16 +272,14 @@ int main() {
 	t_stack a;
 	t_stack b;
 	
-	if (!stack_init(&a, 'a', 9, 1, 10, 500))
+	if (!stack_init(&a, 'a', 9, 1, 9, 500))
 		return 0;
-	if (!stack_init(&b, 'b', 0, 0, 0, 0))
+	if (!stack_init(&b, 'b', 0, 1, 10, 500))
 		return 0;
 	
 	stack_print(a);
 	printf("\n");
-	stack_swap_indexes(&a, &b, 0, 5);
-	//stack_realign(&a);
+	stack_swap_indexes(&a, &b, 0, 7);
 	printf("\n");
 	stack_print(a);
-	stack_print(b);
 }
