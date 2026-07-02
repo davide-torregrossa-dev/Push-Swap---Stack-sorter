@@ -22,7 +22,7 @@ char	**flagnames_array_create(void)
 {
 	char	**flags;
 
-	flags = (char **)malloc(5 * sizeof(char *));
+	flags = (char **)malloc(4 * sizeof(char *));
 	if (flags == NULL)
 		return (NULL);
 	flags[STRATEGIES_ADAPTIVE] = "--adaptive";
