@@ -41,7 +41,7 @@ int	string_is_number(const char *str);
 int	string_equals(const char *s1, const char *s2);
 int	array_find_string(char **arr, char *query);
 char	**flagnames_array_create(void);
-int	strategy_determine(char **av, int bench_flag_found);
+int	input_get_strategy(char **av, int bench_flag_found);
 void	input_handling(char **av, int ac, t_program *programpt,
 		t_stack *stack_apt);
 
