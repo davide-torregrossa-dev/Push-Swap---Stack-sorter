@@ -25,11 +25,10 @@ char	**flagnames_array_create(void)
 	flags = (char **)malloc(4 * sizeof(char *));
 	if (flags == NULL)
 		return (NULL);
-	flags[STRATEGIES_ADAPTIVE] = "--adaptive";
+	flags[STRATEGIES_ADAPTIVE_CLI] = "--adaptive";
 	flags[STRATEGIES_SIMPLE] = "--simple";
 	flags[STRATEGIES_MEDIUM] = "--medium";
 	flags[STRATEGIES_COMPLEX] = "--complex";
-	flags[4] = NULL;
 	return (flags);
 }
 
@@ -41,10 +40,10 @@ int	input_get_strategy(char **av, int bench_flag_found)
 
 	arg_index = 1 + bench_flag_found;
 	flagnames = flagnames_array_create();
-	flag_index = array_find_string(flagnames, av[arg_index]);
-	if (flag_index == STRATEGIES_ADAPTIVE)
-		flag_index = STRATEGIES_ADAPTIVE_CLI;
-	else if (flag_index == -1)
+	flag_index = array_find_string(flagnames, 4, av[arg_index]);
+//	if (flag_index == STRATEGIES_ADAPTIVE)
+//		flag_index = STRATEGIES_ADAPTIVE_CLI;
+	if (flag_index == -1)
 	{
 		if (!string_is_number(av[arg_index]))
 		{
@@ -69,6 +68,8 @@ void	input_handling(char **av, int ac, t_program *programpt,
 	programpt->strategy = input_get_strategy(av, programpt->benchmode);
 	ints_start_from = 1 + programpt->benchmode
 		+ (programpt->strategy != STRATEGIES_ADAPTIVE);
+	printf("benchmode: %d\nstrategy: %d\nhas_strategy_flag: %d\n", programpt->benchmode, programpt->strategy, programpt->strategy != STRATEGIES_ADAPTIVE);
+	printf("ints_start_from: %d\nremaining_args: %d\n", ints_start_from, ac - ints_start_from);
 	if ((ac - ints_start_from) == 0)
 		fail();
 	

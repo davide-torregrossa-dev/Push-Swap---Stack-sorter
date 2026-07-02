@@ -12,14 +12,14 @@
 
 #include "push_swap.h"
 
-int	array_find_string(char **arr, char *query)
+int	array_find_string(char **arr, int size, char *query)
 {
 	int	i;
 
 	if (arr == NULL || query == NULL)
-		return (0);
+		return (-1);
 	i = 0;
-	while (arr[i] != NULL)
+	while (i < size)
 	{
 		if (string_equals(arr[i], query) == 1)
 			return (i);

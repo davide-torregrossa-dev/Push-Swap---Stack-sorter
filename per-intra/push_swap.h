@@ -15,11 +15,12 @@
 #include <stdlib.h>
 #include <time.h> //Eliminami
 
-#define STRATEGIES_ADAPTIVE 0
+
+#define STRATEGIES_ADAPTIVE_CLI 0
 #define STRATEGIES_SIMPLE 1
 #define STRATEGIES_MEDIUM 2
 #define STRATEGIES_COMPLEX 3
-#define STRATEGIES_ADAPTIVE_CLI 4
+#define STRATEGIES_ADAPTIVE 4
 
 typedef struct s_stack
 {
@@ -39,7 +40,7 @@ typedef struct s_program
 int	char_to_number(const char c);
 int	string_is_number(const char *str);
 int	string_equals(const char *s1, const char *s2);
-int	array_find_string(char **arr, char *query);
+int	array_find_string(char **arr, int size, char *query);
 char	**flagnames_array_create(void);
 int	input_get_strategy(char **av, int bench_flag_found);
 void	input_handling(char **av, int ac, t_program *programpt,
