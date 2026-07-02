@@ -6,7 +6,7 @@
 /*   By: egarlasc <egarlasc@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 11:49:11 by egarlasc          #+#    #+#             */
-/*   Updated: 2026/06/24 11:51:43 by egarlasc         ###   ########.fr       */
+/*   Updated: 2026/06/30 12:17:38 by egarlasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_list
 }					t_list;
 
 int		ft_atoi(const char *nptr);
+long	ft_atol(const char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_isalnum(int c);
