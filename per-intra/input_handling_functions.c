@@ -33,7 +33,7 @@ char	**flagnames_array_create(void)
 	return (flags);
 }
 
-int	strategy_determine(char **av, int bench_flag_found)
+int	input_get_strategy(char **av, int bench_flag_found)
 {
 	char	**flagnames;
 	int		flag_index;
@@ -47,9 +47,13 @@ int	strategy_determine(char **av, int bench_flag_found)
 	else if (flag_index == -1)
 	{
 		if (!string_is_number(av[arg_index]))
+		{
+			free(flagnames);
 			fail();
+		}
 		flag_index = STRATEGIES_ADAPTIVE;
 	}
+	free(flagnames);
 	return (flag_index);
 }
 
@@ -62,7 +66,7 @@ void	input_handling(char **av, int ac, t_program *programpt,
 		exit(1);
 	programpt->benchmode = string_equals(av[1], "--bench");
 	programpt->strategy = STRATEGIES_ADAPTIVE;
-	programpt->strategy = strategy_determine(av, programpt->benchmode);
+	programpt->strategy = input_get_strategy(av, programpt->benchmode);
 	ints_start_from = 1 + programpt->benchmode
 		+ (programpt->strategy != STRATEGIES_ADAPTIVE);
 	if ((ac - ints_start_from) == 0)
