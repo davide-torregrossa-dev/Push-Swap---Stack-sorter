@@ -20,6 +20,20 @@ int	main(int ac, char **av)
 	stack_print(a);
 	printf("%f\n", calculate_disorder(&a));
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/*
 args = get_args(av, ac, &is_alloc);
 if (!args || !validate_args(args))

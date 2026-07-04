@@ -38,28 +38,41 @@ typedef struct s_program
 	int	benchmode;
 }		t_program;
 
-int	char_to_number(const char c);
-int	string_is_number(const char *str);
-int	string_equals(const char *s1, const char *s2);
-int	array_find_string(char **arr, int size, char *query);
+
 char	**flagnames_array_create(void);
 int	input_get_strategy(char **av, int bench_flag_found);
 void	input_handling(char **av, int ac, t_program *programpt,
 		t_stack *stack_apt);
-int	atoi_check(const char *nptr);
-void stack_print(t_stack stack);
-void stack_init(t_stack *stackpt, char name, int *content, int size);
 double	calculate_disorder(t_stack *stack_apt);
 
 
+int	char_to_number(const char c);
+
+int	string_is_number(const char *str);
+int	string_equals(const char *s1, const char *s2);
+
+void	s(t_stack *stackpt);
+void	p(t_stack *from_stackpt, t_stack *to_stackpt);
+void	r(t_stack *stackpt, int times);
 
 
 
 
+void stack_init(t_stack *stackpt, char name, int *content, int size);
+void	stack_print(t_stack stack);
+
+void	stack_append(t_stack *stackpt, int value);
+void	stack_prepend(t_stack *stackpt, int value);
+void	stack_rm_index(t_stack *stackpt, int index);
+void	stack_rotate(t_stack *stackpt, int dir);
 
 
-//int			flags_skipper(int ac, char **av);
-//int			is_valid_arg(char *str);
-//int			check_limits_and_duplicates(char **args, int current_index,
-//				long num);
-//int			validate_args(char **args);
+
+int	array_find_string(char **arr, int size, char *query);
+int	*array_swap_indexes(int *arr, int i1, int i2);
+int	*array_append(int *arr, int arr_size, int value);
+int	*array_prepend(int *arr, int arr_size, int value);
+int	*array_rm_index(int *arr, int arr_size, int index);
+int	*array_rotate(int *arr, int arr_size, int dir);
+
+int	atoi_check(const char *nptr);
