@@ -107,7 +107,7 @@ int	*atoi_batch_string(char **strings)
 	return (out);
 }
 
-void	input_handling(char **av, int ac, t_program *programpt,
+void	program_and_stack_init(char **av, int ac, t_program *programpt,
 		t_stack *stack_apt)
 {
 	int	ints_start_from;

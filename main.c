@@ -16,7 +16,7 @@ int	main(int ac, char **av)
 {
 	t_program	program;
 	t_stack		a;
-	input_handling(av, ac, &program, &a);
+	program_and_stack_init(av, ac, &program, &a);
 	stack_print(a);
 	printf("%f\n", calculate_disorder(&a));
 }

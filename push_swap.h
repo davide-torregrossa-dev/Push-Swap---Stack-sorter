@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
-#include <time.h> //Eliminami
+
 
 
 #define STRATEGIES_ADAPTIVE_CLI 0
@@ -39,10 +39,9 @@ typedef struct s_program
 }		t_program;
 
 
-char	**flagnames_array_create(void);
-int	input_get_strategy(char **av, int bench_flag_found);
-void	input_handling(char **av, int ac, t_program *programpt,
+void	program_and_stack_init(char **av, int ac, t_program *programpt,
 		t_stack *stack_apt);
+int	input_get_strategy(char **av, int bench_flag_found);
 double	calculate_disorder(t_stack *stack_apt);
 
 
