@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egarlasc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/21 12:43:15 by egarlasc          #+#    #+#             */
-/*   Updated: 2026/05/27 17:03:15 by egarlasc         ###   ########.fr       */
+/*   Created: 2026/05/21 13:16:00 by egarlasc          #+#    #+#             */
+/*   Updated: 2026/07/03 17:24:37 by egarlasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_memcmp(const void *s1, const void *s2, size_t n)
+int	ft_atoi(const char *nptr)
 {
-	size_t				i;
-	const unsigned char	*str1;
-	const unsigned char	*str2;
+	int	i;
+	int	sign;
+	int	num;
 
-	str1 = (const unsigned char *) s1;
-	str2 = (const unsigned char *) s2;
 	i = 0;
-	while (i < n)
+	num = 0;
+	sign = 1;
+	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
+		i++;
+	if (nptr[i] == '-')
 	{
-		if (str1[i] != str2[i])
-			return (str1[i] - str2[i]);
+		sign *= -1;
 		i++;
 	}
-	return (0);
+	else if (nptr[i] == '+')
+		i++;
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		num = num * 10 + nptr[i] - '0';
+		i++;
+	}
+	return (num * sign);
 }

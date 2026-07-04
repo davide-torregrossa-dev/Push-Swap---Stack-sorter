@@ -6,13 +6,14 @@
 /*   By: egarlasc <egarlasc@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 13:26:40 by egarlasc          #+#    #+#             */
-/*   Updated: 2026/06/30 14:32:45 by egarlasc         ###   ########.fr       */
+/*   Updated: 2026/07/03 18:06:35 by egarlasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <time.h> //Eliminami
 
 
@@ -45,9 +46,10 @@ char	**flagnames_array_create(void);
 int	input_get_strategy(char **av, int bench_flag_found);
 void	input_handling(char **av, int ac, t_program *programpt,
 		t_stack *stack_apt);
-
-
-
+int	atoi_check(const char *nptr);
+void stack_print(t_stack stack);
+void stack_init(t_stack *stackpt, char name, int *content, int size);
+double	calculate_disorder(t_stack *stack_apt);
 
 
 

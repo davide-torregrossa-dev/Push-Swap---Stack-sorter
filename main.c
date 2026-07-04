@@ -6,7 +6,7 @@
 /*   By: egarlasc <egarlasc@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/24 11:33:55 by egarlasc          #+#    #+#             */
-/*   Updated: 2026/07/02 15:13:08 by dtorregr         ###   ########.fr       */
+/*   Updated: 2026/07/03 18:04:22 by egarlasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ int	main(int ac, char **av)
 {
 	t_program	program;
 	t_stack		a;
-
 	input_handling(av, ac, &program, &a);
+	stack_print(a);
+	printf("%f\n", calculate_disorder(&a));
 }
-/*
+	/*
 args = get_args(av, ac, &is_alloc);
 if (!args || !validate_args(args))
 {
