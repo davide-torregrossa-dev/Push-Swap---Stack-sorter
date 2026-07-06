@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   array_functions_01.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: egarlasc <egarlasc@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/06 15:50:34 by egarlasc          #+#    #+#             */
+/*   Updated: 2026/07/06 15:59:37 by egarlasc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	*array_rotate(int *arr, int arr_size, int dir)
@@ -24,4 +36,52 @@ int	*array_rotate(int *arr, int arr_size, int dir)
 		arr[0] = temp;
 	}
 	return (arr);
+}
+
+int	array_find_int(int *arr, int size, int query)
+{
+	int	i;
+
+	if (arr == NULL)
+		return (-1);
+	i = 0;
+	while (i < size)
+	{
+		if (arr[i] == query)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int	array_get_min_index(int *arr,int size)
+{
+	int	mini;
+	int	i;
+
+	i = 0;
+	mini = i;
+	while (i < size)
+	{
+		if (arr[i] < arr[mini])
+			mini = i;
+		i++;
+	}
+	return (i);
+}
+
+int	array_get_max_index(int *arr, int size)
+{
+	int	maxi;
+	int	i;
+
+	i = 0;
+	maxi = i;
+	while (i < size)
+	{
+		if (arr[i] > arr[maxi])
+			maxi = i;
+		i++;
+	}
+	return (i);
 }

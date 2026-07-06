@@ -6,7 +6,7 @@
 /*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 15:13:38 by dtorregr          #+#    #+#             */
-/*   Updated: 2026/07/03 17:21:15 by egarlasc         ###   ########.fr       */
+/*   Updated: 2026/07/06 14:34:54 by egarlasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ int	string_is_number(const char *str)
 	if (str == NULL || str[0] == '\0')
 		return (0);
 	i = 0;
+	if (char_to_number(str[0]) == -1)
+	{
+		if (str[0] != '-' && str[0] != '+')
+			fail();
+		i++;
+	}
 	while (str[i] != '\0')
 	{
 		if (char_to_number(str[i]) == -1)

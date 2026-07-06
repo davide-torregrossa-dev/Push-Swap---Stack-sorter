@@ -6,7 +6,7 @@
 /*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 15:11:10 by dtorregr          #+#    #+#             */
-/*   Updated: 2026/07/03 17:53:39 by egarlasc         ###   ########.fr       */
+/*   Updated: 2026/07/06 14:48:57 by egarlasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	*atoi_batch_string(char **strings)
 {
 	int	i;
 	int	*out;
+	int n;
 
 	i = 0;
 	while (strings[i])
@@ -101,7 +102,10 @@ int	*atoi_batch_string(char **strings)
 	i = 0;
 	while (strings[i])
 	{
-		out[i] = atoi_check(strings[i]);
+		n = atoi_check(strings[i]);
+		if (array_find_int(out, i, n) != -1)
+			fail();
+		out[i] = n;
 		i++;
 	}
 	return (out);
@@ -112,6 +116,7 @@ void	program_and_stack_init(char **av, int ac, t_program *programpt,
 {
 	int	ints_start_from;
 	int *stack_content;
+
 	if (ac == 1)
 		exit(1);
 	programpt->benchmode = string_equals(av[1], "--bench");
@@ -122,8 +127,7 @@ void	program_and_stack_init(char **av, int ac, t_program *programpt,
 	printf("benchmode: %d\nstrategy: %d\nhas_strategy_flag: %d\n", programpt->benchmode, programpt->strategy, programpt->strategy != STRATEGIES_ADAPTIVE);
 	printf("ints_start_from: %d\nremaining_args: %d\n", ints_start_from, ac - ints_start_from);
 	if ((ac - ints_start_from) == 0)
-		fail();
-	
+		fail();	
 	stack_content = atoi_batch_string(&av[ints_start_from]);
 	stack_init(stack_apt, 'a', stack_content, ac-ints_start_from);
 }

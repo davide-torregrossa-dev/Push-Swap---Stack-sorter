@@ -6,7 +6,7 @@
 /*   By: egarlasc <egarlasc@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/30 13:26:40 by egarlasc          #+#    #+#             */
-/*   Updated: 2026/07/03 18:06:35 by egarlasc         ###   ########.fr       */
+/*   Updated: 2026/07/06 16:23:06 by egarlasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_program
 }		t_program;
 
 
+void	fail(void);
+
 void	program_and_stack_init(char **av, int ac, t_program *programpt,
 		t_stack *stack_apt);
 int	input_get_strategy(char **av, int bench_flag_found);
@@ -54,7 +56,7 @@ void	s(t_stack *stackpt);
 void	p(t_stack *from_stackpt, t_stack *to_stackpt);
 void	r(t_stack *stackpt, int times);
 
-
+void	r_goto_index(t_stack *stackpt, int index);
 
 
 void stack_init(t_stack *stackpt, char name, int *content, int size);
@@ -67,11 +69,15 @@ void	stack_rotate(t_stack *stackpt, int dir);
 
 
 
-int	array_find_string(char **arr, int size, char *query);
 int	*array_swap_indexes(int *arr, int i1, int i2);
+int	array_find_string(char **arr, int size, char *query);
+int	array_find_int(int *arr, int size, int query);
 int	*array_append(int *arr, int arr_size, int value);
 int	*array_prepend(int *arr, int arr_size, int value);
 int	*array_rm_index(int *arr, int arr_size, int index);
 int	*array_rotate(int *arr, int arr_size, int dir);
+int array_get_max_index(int *arr, int size);
+int array_get_min_index(int *arr,int size);
+
 
 int	atoi_check(const char *nptr);

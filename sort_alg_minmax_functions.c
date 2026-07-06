@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sort_alg_minmax_functions.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egarlasc <egarlasc@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/24 11:33:55 by egarlasc          #+#    #+#             */
-/*   Updated: 2026/07/06 16:27:27 by egarlasc         ###   ########.fr       */
+/*   Created: 2026/07/06 16:00:36 by egarlasc          #+#    #+#             */
+/*   Updated: 2026/07/06 16:24:25 by egarlasc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int ac, char **av)
+void	minmax_apply(t_stack *stack_apt)
 {
-	t_program	program;
-	t_stack		a;
-	program_and_stack_init(av, ac, &program, &a);
-	stack_print(a);
-	r_goto_index(&a, 2);
-	printf("%f\n", calculate_disorder(&a));
-	stack_print(a);
+	int	max;
+	int	min;
+
+	max = array_get_max_index(stack_apt->content, stack_apt->current_size);
+	min = array_get_min_index(stack_apt->content, stack_apt->current_size);
+
 }
