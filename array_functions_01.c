@@ -54,7 +54,7 @@ int	array_find_int(int *arr, int size, int query)
 	return (-1);
 }
 
-int	array_get_min_index(int *arr,int size)
+int	array_find_min_index(int *arr,int size)
 {
 	int	mini;
 	int	i;
@@ -63,14 +63,14 @@ int	array_get_min_index(int *arr,int size)
 	mini = i;
 	while (i < size)
 	{
-		if (arr[i] < arr[mini])
+		if (arr[mini] > arr[i])
 			mini = i;
 		i++;
 	}
-	return (i);
+	return (mini);
 }
 
-int	array_get_max_index(int *arr, int size)
+int	array_find_max_index(int *arr, int size)
 {
 	int	maxi;
 	int	i;
@@ -79,9 +79,9 @@ int	array_get_max_index(int *arr, int size)
 	maxi = i;
 	while (i < size)
 	{
-		if (arr[i] > arr[maxi])
+		if (arr[maxi] < arr[i])
 			maxi = i;
 		i++;
 	}
-	return (i);
+	return (maxi);
 }

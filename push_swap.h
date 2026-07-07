@@ -27,7 +27,6 @@ typedef struct s_stack
 {
 	int		*content;
 	int		current_size;
-	int		max_size;
 	int		offset;
 	char	name;
 }			t_stack;
@@ -56,7 +55,7 @@ void	s(t_stack *stackpt);
 void	p(t_stack *from_stackpt, t_stack *to_stackpt);
 void	r(t_stack *stackpt, int times);
 
-void	r_goto_index(t_stack *stackpt, int index);
+int	r_goto_index(t_stack *stackpt, int index, int hmode);
 
 
 void stack_init(t_stack *stackpt, char name, int *content, int size);
@@ -68,16 +67,16 @@ void	stack_rm_index(t_stack *stackpt, int index);
 void	stack_rotate(t_stack *stackpt, int dir);
 
 
-
-int	*array_swap_indexes(int *arr, int i1, int i2);
 int	array_find_string(char **arr, int size, char *query);
 int	array_find_int(int *arr, int size, int query);
+int array_find_max_index(int *arr, int size);
+int array_find_min_index(int *arr,int size);
+int	*array_swap_indexes(int *arr, int i1, int i2);
 int	*array_append(int *arr, int arr_size, int value);
 int	*array_prepend(int *arr, int arr_size, int value);
 int	*array_rm_index(int *arr, int arr_size, int index);
 int	*array_rotate(int *arr, int arr_size, int dir);
-int array_get_max_index(int *arr, int size);
-int array_get_min_index(int *arr,int size);
 
 
+void minmax_do1step(t_stack *stack_apt, t_stack *stack_bpt);
 int	atoi_check(const char *nptr);
