@@ -10,7 +10,7 @@ SRCS     = $(wildcard *.c)
 OBJS     = $(SRCS:.c=.o)
 
 # 3. REGOLE DI COMPILAZIONE
-.PHONY: all clean run
+.PHONY: all clean run fclean
 
 # Regola di default (eseguita quando scrivi solo 'make')
 all: $(TARGET)
@@ -30,3 +30,6 @@ clean:
 # 5. REGOLA PER COMPILARE AVVIARE RAPIDAMENTE
 run: all
 	./$(TARGET)
+
+fclean: clean
+	$(RM) $(NAME)

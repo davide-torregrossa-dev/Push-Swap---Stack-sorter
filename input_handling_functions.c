@@ -124,8 +124,8 @@ void	program_and_stack_init(char **av, int ac, t_program *programpt,
 	programpt->strategy = input_get_strategy(av, programpt->benchmode);
 	ints_start_from = 1 + programpt->benchmode
 		+ (programpt->strategy != STRATEGIES_ADAPTIVE);
-	printf("benchmode: %d\nstrategy: %d\nhas_strategy_flag: %d\n", programpt->benchmode, programpt->strategy, programpt->strategy != STRATEGIES_ADAPTIVE);
-	printf("ints_start_from: %d\nremaining_args: %d\n", ints_start_from, ac - ints_start_from);
+	//printf("benchmode: %d\nstrategy: %d\nhas_strategy_flag: %d\n", programpt->benchmode, programpt->strategy, programpt->strategy != STRATEGIES_ADAPTIVE);
+	//printf("ints_start_from: %d\nremaining_args: %d\n", ints_start_from, ac - ints_start_from);
 	if ((ac - ints_start_from) == 0)
 		fail();	
 	stack_content = atoi_batch_string(&av[ints_start_from]);

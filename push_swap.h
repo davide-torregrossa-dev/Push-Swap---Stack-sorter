@@ -55,8 +55,10 @@ void	s(t_stack *stackpt);
 void	p(t_stack *from_stackpt, t_stack *to_stackpt);
 void	r(t_stack *stackpt, int times);
 
-int	r_goto_index(t_stack *stackpt, int index, int hmode);
-
+void p_pour(t_stack *stack_frompt, t_stack *stack_topt);
+void	r_realign(t_stack *stackpt);
+void	r_goto_index(t_stack *stackpt, int index);
+int rcost_goto_index(t_stack *stackpt, int from_index, int target_index);
 
 void stack_init(t_stack *stackpt, char name, int *content, int size);
 void	stack_print(t_stack stack);
@@ -80,3 +82,4 @@ int	*array_rotate(int *arr, int arr_size, int dir);
 
 void minmax_do1step(t_stack *stack_apt, t_stack *stack_bpt);
 int	atoi_check(const char *nptr);
+int ft_abs(int n);
