@@ -23,6 +23,12 @@
 #define STRATEGIES_COMPLEX 3
 #define STRATEGIES_ADAPTIVE 4
 
+typedef struct s_program
+{
+	int	strategy;
+	int	benchmode;
+}		t_program;
+
 typedef struct s_stack
 {
 	int		*content;
@@ -31,12 +37,13 @@ typedef struct s_stack
 	char	name;
 }			t_stack;
 
-typedef struct s_program
+typedef struct s_bucket
 {
-	int	strategy;
-	int	benchmode;
-}		t_program;
-
+	int *content;
+	int current_size;
+	int maxr;
+	int minr;
+}	t_bucket;
 
 void	fail(void);
 
@@ -81,5 +88,12 @@ int	*array_rotate(int *arr, int arr_size, int dir);
 
 
 void minmax_do1step(t_stack *stack_apt, t_stack *stack_bpt);
+
+t_stack *bucketsort_init(t_stack *stackpt);
+void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *buckets);
+
 int	atoi_check(const char *nptr);
+
 int ft_abs(int n);
+int ft_sqrt(int n);
+int int_in_range(int n, int min, int max);
