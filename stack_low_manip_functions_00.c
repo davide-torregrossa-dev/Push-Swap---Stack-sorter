@@ -4,7 +4,7 @@ void stack_init(t_stack *stackpt, char name, int *content, int size)
 {
 	if (content == NULL)
 	{
-		content = malloc(0);
+		content = malloc(4);
 		if (!content)
 			exit(1);
 		size = 0;

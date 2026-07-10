@@ -6,11 +6,9 @@ int ft_abs(int n)
 }
 
 int int_in_range(int n, int min, int max) {
-    if (n < min)
-        return 0;
-    if (n > max)
-        return 0;
-    return 1;
+    if (n >= min && n <= max)
+        return 1;
+    return 0;
 }
 
 int ft_sqrt(int n) {

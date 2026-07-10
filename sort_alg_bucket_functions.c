@@ -21,7 +21,7 @@ static int calculate_bucket_range_gap(t_stack *stackpt, int nbuckets)
     min = stackpt->content[min];
     max = array_find_max_index(stackpt->content, stackpt->current_size);
     max = stackpt->content[max];
-    return (max-min)/nbuckets+1;
+    return (max-min)/(nbuckets-1);
 }
 
 
@@ -38,21 +38,21 @@ static void bucket_fill(t_stack *stackpt, t_stack *bucketpt, int rmin, int rmax)
     }
 }
 
-static void bucket_remove_duplicates(t_stack *bucket_frompt, t_stack *bucket_topt)
+static void bucket_remove_duplicates(t_stack *bucket, t_stack *ref)
 {
     int i;
     int query;
-    int tosize;
+    int refsize;
     int foundat;
 
     i = 0;
-    tosize = bucket_topt -> current_size;
-    while (i < bucket_frompt->current_size)
+    refsize = ref -> current_size;
+    while (i < bucket->current_size)
     {
-        query = bucket_frompt->content[i];
-        foundat = array_find_int(bucket_topt->content, tosize, query);
+        query = bucket->content[i];
+        foundat = array_find_int(ref->content, refsize, query);
         if (foundat != -1)
-            stack_rm_index(bucket_frompt, foundat);
+            stack_rm_index(bucket, i);
         i++;
     }
 
@@ -64,25 +64,30 @@ t_stack *bucketsort_init(t_stack *stackpt)
     int brg;
     int bucket_i;
     int nbuckets;
-    
+    //int test = 0;
+
     nbuckets = ft_sqrt(stackpt->current_size);
     brg = calculate_bucket_range_gap(stackpt, nbuckets);
-    buckets = malloc(sizeof(t_stack) * (nbuckets + 1));
+    buckets = malloc(sizeof(t_stack) * (nbuckets));
     if (!buckets) {
         //free su malloc precedenti (smalloc)
         exit(1);
     }
     bucket_i = 0;
-    while (bucket_i < nbuckets-1)
+    while (bucket_i < nbuckets)
     {
         stack_init(&buckets[bucket_i], 'b', NULL, 0);
         bucket_fill(stackpt, &buckets[bucket_i], brg * bucket_i, brg * (bucket_i+1));
         if (bucket_i != 0)
-            bucket_remove_duplicates(&buckets[bucket_i], &buckets[bucket_i-1]);   
+            bucket_remove_duplicates(&buckets[bucket_i], &buckets[bucket_i-1]);
         //stack_print(buckets[bucket_i]);
+        //test += buckets[bucket_i].current_size;
         bucket_i++;
+        
     }
+    //printf("\n%d", test);
     buckets[nbuckets].name = '\0';
+    //stack_print(buckets[nbuckets]);
     return (buckets);
 }
 
@@ -92,9 +97,10 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
     int i;
     int idx;
     int size;
+    int temp;
 
     bi = 0;
-    while(buckets[bi].name)
+    while(buckets[bi+1].name)
         bi++;
     while(bi != -1)
     {
@@ -107,14 +113,22 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
             p(tosortpt, second_stackpt);
             i++;
         }
+        //stack_print(*second_stackpt);
+        if (i != 0)
+        {
+            temp = array_find_int(tosortpt->content, size, temp);
+            r_goto_index(tosortpt, temp);
+        }
         while(second_stackpt -> current_size)
         {
             idx = array_find_max_index(second_stackpt->content, second_stackpt->current_size);
             r_goto_index(second_stackpt, idx);
             p(second_stackpt, tosortpt);
+            
         }
+        //stack_print(*tosortpt);
+        temp = tosortpt->content[0];
         bi--;
-        stack_print(*tosortpt);
     }
     
 }
