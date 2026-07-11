@@ -24,3 +24,19 @@ int ft_sqrt(int n) {
     }
     return (int)x;
 }
+
+int	factorialof(int n)
+{
+	int	f;
+	int	i;
+
+	f = 1;
+	i = 1;
+	while (i <= n)
+	{
+		f *= i;
+		i++;
+	}
+	return (f);
+}
+

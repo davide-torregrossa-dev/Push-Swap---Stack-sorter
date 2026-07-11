@@ -55,7 +55,6 @@ static void bucket_remove_duplicates(t_stack *bucket, t_stack *ref)
             stack_rm_index(bucket, i);
         i++;
     }
-
 }
 
 t_stack *bucketsort_init(t_stack *stackpt)
@@ -64,7 +63,6 @@ t_stack *bucketsort_init(t_stack *stackpt)
     int brg;
     int bucket_i;
     int nbuckets;
-    //int test = 0;
 
     nbuckets = ft_sqrt(stackpt->current_size);
     brg = calculate_bucket_range_gap(stackpt, nbuckets);
@@ -76,18 +74,13 @@ t_stack *bucketsort_init(t_stack *stackpt)
     bucket_i = 0;
     while (bucket_i < nbuckets)
     {
-        stack_init(&buckets[bucket_i], 'b', NULL, 0);
+        stack_init(&buckets[bucket_i], 'z', NULL, 0);
         bucket_fill(stackpt, &buckets[bucket_i], brg * bucket_i, brg * (bucket_i+1));
         if (bucket_i != 0)
             bucket_remove_duplicates(&buckets[bucket_i], &buckets[bucket_i-1]);
-        //stack_print(buckets[bucket_i]);
-        //test += buckets[bucket_i].current_size;
         bucket_i++;
-        
     }
-    //printf("\n%d", test);
     buckets[nbuckets].name = '\0';
-    //stack_print(buckets[nbuckets]);
     return (buckets);
 }
 
@@ -99,12 +92,35 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
     int size;
     int temp;
 
+
+
     bi = 0;
     while(buckets[bi+1].name)
         bi++;
+    
     while(bi != -1)
     {
+        stack_print(*tosortpt);
         i = 0;
+        while(i < buckets[bi].current_size)
+        {
+            buckets[bi].content[i] = array_find_int(tosortpt->content, tosortpt->current_size, buckets[bi].content[i]);
+            i++;
+        }
+        buckets[bi].content = stack_get_bestroute_for_indexes(tosortpt, buckets[bi].content, buckets[bi].current_size);
+        i = 0;
+        stack_print(buckets[bi]); //qui succede macello perché a volte nella stack un valore diventa 0! sembra accadere all'ultimo secchio.
+        while(i < buckets[bi].current_size)
+        {
+            size = tosortpt->current_size;
+            idx = 0;
+            idx = array_find_int(tosortpt->content, tosortpt->current_size, buckets[bi].content[i]);
+            r_goto_index(tosortpt, idx);
+            p(tosortpt, second_stackpt);
+            i++;
+        }
+        
+        /*
         while(i < buckets[bi].current_size)
         {
             size = tosortpt->current_size;
@@ -113,7 +129,7 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
             p(tosortpt, second_stackpt);
             i++;
         }
-        //stack_print(*second_stackpt);
+        */
         if (i != 0)
         {
             temp = array_find_int(tosortpt->content, size, temp);
@@ -126,9 +142,8 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
             p(second_stackpt, tosortpt);
             
         }
-        //stack_print(*tosortpt);
         temp = tosortpt->content[0];
         bi--;
     }
-    
+    stack_print(*tosortpt);
 }

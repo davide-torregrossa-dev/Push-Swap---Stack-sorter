@@ -44,37 +44,20 @@ void	minmax_do1step(t_stack *stack_frompt, t_stack *stack_topt)
 {
 	int	max_index;
 	int	min_index;
-	int maxfirst_cost;
-	int minfirst_cost;
+	int *bestroute;
+	int *minmaxindexes;
 
 	max_index = array_find_max_index(stack_frompt->content, stack_frompt->current_size);
 	min_index = array_find_min_index(stack_frompt->content, stack_frompt->current_size);
-	maxfirst_cost = rcost_goto_index(stack_frompt, 0, max_index);
-	maxfirst_cost += rcost_goto_index(stack_frompt, max_index, min_index);
-	minfirst_cost = rcost_goto_index(stack_frompt, 0, min_index);
-	minfirst_cost += rcost_goto_index(stack_frompt, min_index, max_index);
-
-	if (maxfirst_cost <= minfirst_cost)
-		minmax_push_maxfirst(stack_frompt, stack_topt);
-	else
+	minmaxindexes = malloc(2*sizeof(int));
+	minmaxindexes[0] = max_index;
+	minmaxindexes[1] = min_index;
+	bestroute = stack_get_bestroute_for_indexes(stack_frompt, minmaxindexes, 2);
+	if (bestroute[0] == min_index)
 		minmax_push_minfirst(stack_frompt, stack_topt);
-	
+	else
+		minmax_push_maxfirst(stack_frompt, stack_topt);
+
+	free(minmaxindexes);
 	r(stack_topt, -1);
 }
-
-
-/*
-void	minmax_do1step(t_stack *stack_apt, t_stack *stack_bpt)
-{
-	int	max_index;
-	int	min_index;
-
-	max_index = array_find_max_index(stack_apt->content, stack_apt->current_size);
-	r_goto_index(stack_apt, max_index);
-	p(stack_apt, stack_bpt);
-	min_index = array_find_min_index(stack_apt->content, stack_apt->current_size);
-	r_goto_index(stack_apt, min_index);
-	p(stack_apt, stack_bpt);
-	r(stack_bpt, -1);
-}
-*/
