@@ -54,6 +54,8 @@ int router_calc_routecost(t_stack *stackpt, int *stops, int stops_size)
     int *indexes;
 
     indexes = malloc(sizeof(int) * stops_size);
+    if (!indexes)
+        return (-1);
     i = 0;
     while(i < stops_size)
     {
@@ -61,9 +63,9 @@ int router_calc_routecost(t_stack *stackpt, int *stops, int stops_size)
         i++;
     }
     cost = 0;
-    cost += rcost_goto_index(stackpt, 0, indexes[i]);
-    i = 0;
-    while (i < stops_size-1)
+    cost += rcost_goto_index(stackpt, 0, indexes[0]);
+    i = 1;
+    while (i < stops_size-2)
     {
         cost += rcost_goto_index(stackpt, indexes[i], indexes[i+1]);
         i++;
@@ -100,7 +102,15 @@ int *router_get_best_order(t_stack *stackpt, int *stops, int stops_size)
     
     out = malloc(sizeof(int) * stops_size);
     if (!out)
+    {
+        i = 0;
+        while (i < combos_amt) {
+            free(combos[i]);
+            i++;
+        }
+        free(combos);
         return NULL;
+    }
 
     array_duplicate(combos[best_is_at_index], out, stops_size);
 
