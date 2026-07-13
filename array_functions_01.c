@@ -85,3 +85,14 @@ int	array_find_max_index(int *arr, int size)
 	}
 	return (maxi);
 }
+
+void array_duplicate(int *arr, int *destarr, int size)
+{
+	int i;
+	
+	i = 0;
+	while(i < size) {
+		destarr[i] = arr[i];
+		i++;
+	}
+}

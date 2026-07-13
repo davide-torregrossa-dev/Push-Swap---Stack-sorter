@@ -52,7 +52,7 @@ void	minmax_do1step(t_stack *stack_frompt, t_stack *stack_topt)
 	minmaxindexes = malloc(2*sizeof(int));
 	minmaxindexes[0] = max_index;
 	minmaxindexes[1] = min_index;
-	bestroute = stack_get_bestroute_for_indexes(stack_frompt, minmaxindexes, 2);
+	bestroute = router_get_best_order(stack_frompt, minmaxindexes, 2);
 	if (bestroute[0] == min_index)
 		minmax_push_minfirst(stack_frompt, stack_topt);
 	else

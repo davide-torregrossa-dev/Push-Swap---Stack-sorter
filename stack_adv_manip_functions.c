@@ -9,10 +9,9 @@ void r_goto_index(t_stack *stackpt, int index)
 {
     int steps;
 
-    if index == 0
-        return;
+
     
-	steps = stackpt->current_size - index;
+    steps = stackpt->current_size - index;
 	if (index < stackpt->current_size / 2)
     	steps = -index;
 	r(stackpt, steps); 
@@ -48,62 +47,63 @@ void p_pour(t_stack *stack_frompt, t_stack *stack_topt)
 
 
 
-int stack_route_calcolate_cost(t_stack *stackpt, int *indexes, int indexes_size)
+int router_calc_routecost(t_stack *stackpt, int *stops, int stops_size)
 {
-    int out;
+    int cost;
     int i;
+    int *indexes;
 
+    indexes = malloc(sizeof(int) * stops_size);
     i = 0;
-    out = 0;
-    out += rcost_goto_index(stackpt, 0, indexes[i]);
-    while (i < indexes_size-1)
+    while(i < stops_size)
     {
-        out += rcost_goto_index(stackpt, indexes[i], indexes[i+1]);
+        indexes[i] = array_find_int(stackpt->content, stackpt->current_size, stops[i]);
         i++;
     }
-    return out;
+    cost = 0;
+    cost += rcost_goto_index(stackpt, 0, indexes[i]);
+    i = 0;
+    while (i < stops_size-1)
+    {
+        cost += rcost_goto_index(stackpt, indexes[i], indexes[i+1]);
+        i++;
+    }
+    
+    free(indexes);
+    return cost;
 }
 
-int *stack_get_bestroute_for_indexes(t_stack *stackpt, int *indexes, int indexes_size)
+int *router_get_best_order(t_stack *stackpt, int *stops, int stops_size)
 {
     int combos_amt;
     int **combos;
     int best_is_at_index;
     int i;
-    int temp;
-    int *result;
+    int *out;
 
-    combos = array_get_all_combos(indexes, indexes_size);
     best_is_at_index = 0;
-    combos_amt = factorialof(indexes_size);
-    
+    printf("%d-----------------------------------\n\n\n", stops_size);
+    combos = array_get_all_combos(stops, stops_size);
+    combos_amt = factorialof(stops_size);
     i = 0;
     while (i < combos_amt)
     {
-        // FIX: Passa indexes_size, non combos_amt!
-        if (stack_route_calcolate_cost(stackpt, combos[i], indexes_size) < 
-            stack_route_calcolate_cost(stackpt, combos[best_is_at_index], indexes_size))
+        printf("i = %d--------------------%d\n\n\n", i, stops_size);
+        if (router_calc_routecost(stackpt, combos[i], stops_size) < 
+            router_calc_routecost(stackpt, combos[best_is_at_index], stops_size))
             best_is_at_index = i;
+        
+        if (i > 8000)
+            break;
         i++;
     }
     
-    // Alloca memoria per il risultato
-    result = malloc(sizeof(int) * indexes_size);
-    if (!result)
+    out = malloc(sizeof(int) * stops_size);
+    if (!out)
         return NULL;
-    
-    i = 0;
-    while(i < indexes_size) {
-        temp = combos[best_is_at_index][i];
-        // FIX: Verifica che l'indice sia valido
-        if (temp >= 0 && temp < stackpt->current_size)
-            result[i] = stackpt->content[temp];
-        else
-            result[i] = 0; // Fallback se indice non valido
-        i++;
-    }
 
-    // Libera tutte le combinazioni
+    array_duplicate(combos[best_is_at_index], out, stops_size);
+
     i = 0;
     while (i < combos_amt) {
         free(combos[i]);
@@ -111,6 +111,6 @@ int *stack_get_bestroute_for_indexes(t_stack *stackpt, int *indexes, int indexes
     }
     free(combos);
     
-    return result;
+    return out;
 }
 

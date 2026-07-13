@@ -74,7 +74,8 @@ void	stack_append(t_stack *stackpt, int value);
 void	stack_prepend(t_stack *stackpt, int value);
 void	stack_rm_index(t_stack *stackpt, int index);
 void	stack_rotate(t_stack *stackpt, int dir);
-int 	*stack_get_bestroute_for_indexes(t_stack *stackpt, int *indexes, int indexes_size);
+
+
 
 int	array_find_string(char **arr, int size, char *query);
 int	array_find_int(int *arr, int size, int query);
@@ -85,8 +86,7 @@ int	*array_append(int *arr, int arr_size, int value);
 int	*array_prepend(int *arr, int arr_size, int value);
 int	*array_rm_index(int *arr, int arr_size, int index);
 int	*array_rotate(int *arr, int arr_size, int dir);
-
-
+void array_duplicate(int *arr, int *destarr, int size);
 int	**array_get_all_combos(int *arr, int size);
 
 void minmax_do1step(t_stack *stack_apt, t_stack *stack_bpt);
@@ -102,3 +102,6 @@ int int_in_range(int n, int min, int max);
 
 void	swap(int *a, int *b);
 int	factorialof(int n);
+
+int *router_get_best_order(t_stack *stackpt, int *stops, int stops_size);
+int router_calc_routecost(t_stack *stackpt, int *stops, int stops_size);

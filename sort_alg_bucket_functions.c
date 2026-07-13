@@ -100,27 +100,33 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
     
     while(bi != -1)
     {
-        stack_print(*tosortpt);
+        
+        
+        
+        
+        stack_print(buckets[bi]);
+        //------------------------------------versione ottimizzata
+        
+        //if (buckets[bi].current_size < 12) {
+            buckets[bi].content = router_get_best_order(tosortpt, buckets[bi].content, buckets[bi].current_size);
+        //}
+
         i = 0;
         while(i < buckets[bi].current_size)
         {
-            buckets[bi].content[i] = array_find_int(tosortpt->content, tosortpt->current_size, buckets[bi].content[i]);
-            i++;
-        }
-        buckets[bi].content = stack_get_bestroute_for_indexes(tosortpt, buckets[bi].content, buckets[bi].current_size);
-        i = 0;
-        stack_print(buckets[bi]); //qui succede macello perché a volte nella stack un valore diventa 0! sembra accadere all'ultimo secchio.
-        while(i < buckets[bi].current_size)
-        {
+            //printf("s");
             size = tosortpt->current_size;
-            idx = 0;
             idx = array_find_int(tosortpt->content, tosortpt->current_size, buckets[bi].content[i]);
             r_goto_index(tosortpt, idx);
             p(tosortpt, second_stackpt);
             i++;
+            
         }
+        //-------------------------------------fine versione ottimizzata
+
         
         /*
+        //------------------------------------versione funzionante
         while(i < buckets[bi].current_size)
         {
             size = tosortpt->current_size;
@@ -129,6 +135,7 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
             p(tosortpt, second_stackpt);
             i++;
         }
+        //------------------------------------fine versione funzionante
         */
         if (i != 0)
         {
@@ -145,5 +152,5 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
         temp = tosortpt->content[0];
         bi--;
     }
-    stack_print(*tosortpt);
+    //stack_print(*tosortpt);
 }
