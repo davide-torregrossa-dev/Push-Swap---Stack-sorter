@@ -39,14 +39,6 @@ void p_pour(t_stack *stack_frompt, t_stack *stack_topt)
 		p(stack_frompt, stack_topt);
 }
 
-
-
-
- 
-
-
-
-
 int router_calc_routecost(t_stack *stackpt, int *stops, int stops_size)
 {
     int cost;
@@ -64,8 +56,8 @@ int router_calc_routecost(t_stack *stackpt, int *stops, int stops_size)
     }
     cost = 0;
     cost += rcost_goto_index(stackpt, 0, indexes[0]);
-    i = 1;
-    while (i < stops_size-2)
+    i = 0;
+    while (i < stops_size-1)
     {
         cost += rcost_goto_index(stackpt, indexes[i], indexes[i+1]);
         i++;
@@ -85,8 +77,11 @@ int *router_get_best_order(t_stack *stackpt, int *stops, int stops_size)
 
     best_is_at_index = 0;
     printf("%d-----------------------------------\n\n\n", stops_size);
-    combos = array_get_all_combos(stops, stops_size);
-    combos_amt = factorialof(stops_size);
+	combos_amt = 50;
+	if (stops_size < 8)
+		combos_amt = factorialof(stops_size);
+    printf("%d-----------------------------------\n\n\n", combos_amt);
+    combos = array_get_combos(stops, stops_size, combos_amt);
     i = 0;
     while (i < combos_amt)
     {
@@ -94,9 +89,6 @@ int *router_get_best_order(t_stack *stackpt, int *stops, int stops_size)
         if (router_calc_routecost(stackpt, combos[i], stops_size) < 
             router_calc_routecost(stackpt, combos[best_is_at_index], stops_size))
             best_is_at_index = i;
-        
-        if (i > 8000)
-            break;
         i++;
     }
     

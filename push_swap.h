@@ -45,6 +45,13 @@ typedef struct s_bucket
 	int minr;
 }	t_bucket;
 
+typedef struct s_combos
+{
+	int	**result;
+	int	current_row;
+	int	size;
+}	t_combos;
+
 void	fail(void);
 
 void	program_and_stack_init(char **av, int ac, t_program *programpt,
@@ -87,7 +94,7 @@ int	*array_prepend(int *arr, int arr_size, int value);
 int	*array_rm_index(int *arr, int arr_size, int index);
 int	*array_rotate(int *arr, int arr_size, int dir);
 void array_duplicate(int *arr, int *destarr, int size);
-int	**array_get_all_combos(int *arr, int size);
+int	**array_get_combos(int *arr, int size, int iterations);
 
 void minmax_do1step(t_stack *stack_apt, t_stack *stack_bpt);
 

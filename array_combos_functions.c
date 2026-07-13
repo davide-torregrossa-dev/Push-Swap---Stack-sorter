@@ -1,11 +1,6 @@
 #include "push_swap.h"
 
-typedef struct s_combos
-{
-	int	**result;
-	int	current_row;
-	int	size;
-}	t_combos;
+
 
 static void	ft_copy_row(t_combos *util, int *arr)
 {
@@ -42,14 +37,12 @@ void	ft_permute(int *arr, int start, t_combos *util)
 	}
 }
 
-int	**array_get_all_combos(int *arr, int size)
+int	**array_get_combos(int *arr, int size, int iterations)
 {
-	int			total_permutations;
 	int			**result;
 	t_combos	util;
-
-	total_permutations = factorialof(size);
-	result = (int **)malloc(total_permutations * sizeof(int *));
+	printf("%s", "perm");
+	result = (int **)malloc(iterations * sizeof(int *));
 	if (!result)
 		return (NULL);
 	util.result = result;
