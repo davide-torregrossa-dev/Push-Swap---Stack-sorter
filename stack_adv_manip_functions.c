@@ -43,10 +43,7 @@ void p_pour(t_stack *stack_frompt, t_stack *stack_topt)
 
 
 
-
-
-
-
+ 
 
 
 
@@ -74,25 +71,46 @@ int *stack_get_bestroute_for_indexes(t_stack *stackpt, int *indexes, int indexes
     int best_is_at_index;
     int i;
     int temp;
+    int *result;
 
     combos = array_get_all_combos(indexes, indexes_size);
     best_is_at_index = 0;
     combos_amt = factorialof(indexes_size);
+    
     i = 0;
     while (i < combos_amt)
     {
-        if (stack_route_calcolate_cost(stackpt, combos[i], combos_amt) < stack_route_calcolate_cost(stackpt, combos[best_is_at_index], combos_amt))
+        // FIX: Passa indexes_size, non combos_amt!
+        if (stack_route_calcolate_cost(stackpt, combos[i], indexes_size) < 
+            stack_route_calcolate_cost(stackpt, combos[best_is_at_index], indexes_size))
             best_is_at_index = i;
         i++;
     }
     
+    // Alloca memoria per il risultato
+    result = malloc(sizeof(int) * indexes_size);
+    if (!result)
+        return NULL;
+    
     i = 0;
     while(i < indexes_size) {
         temp = combos[best_is_at_index][i];
-        combos[best_is_at_index][i] = stackpt->content[temp];
+        // FIX: Verifica che l'indice sia valido
+        if (temp >= 0 && temp < stackpt->current_size)
+            result[i] = stackpt->content[temp];
+        else
+            result[i] = 0; // Fallback se indice non valido
         i++;
     }
 
-    return combos[best_is_at_index]; 
+    // Libera tutte le combinazioni
+    i = 0;
+    while (i < combos_amt) {
+        free(combos[i]);
+        i++;
+    }
+    free(combos);
+    
+    return result;
 }
 
