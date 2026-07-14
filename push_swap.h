@@ -50,7 +50,11 @@ typedef struct s_combos
 	int	**result;
 	int	current_row;
 	int	size;
+<<<<<<< HEAD
 	int max_iterations;
+=======
+	int	max_iterations;
+>>>>>>> c976ec7ad4c8f5c4485145be1f337ebd6836611b
 }	t_combos;
 
 void	fail(void);
