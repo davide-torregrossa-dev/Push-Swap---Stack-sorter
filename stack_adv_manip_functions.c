@@ -77,11 +77,11 @@ int *router_get_best_order(t_stack *stackpt, int *stops, int stops_size)
 
     best_is_at_index = 0;
     //printf("%d-----------------------------------\n\n\n", stops_size);
-	combos_amt = 6000;
+	combos_amt = 25;
 	if (stops_size <= 7)
 		combos_amt = factorialof(stops_size);
     //printf("%d-----------------------------------\n\n\n", combos_amt);
-    combos = array_get_combos(stops, stops_size, combos_amt);
+    combos = array_get_rcombos(stops, stops_size, combos_amt);
     i = 0;
     while (i < combos_amt)
     {

@@ -103,14 +103,10 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
         
         
         
-        
+        /*
         //stack_print(buckets[bi]);
         //------------------------------------versione ottimizzata
-        
-        //if (buckets[bi].current_size < 12) {
-            buckets[bi].content = router_get_best_order(tosortpt, buckets[bi].content, buckets[bi].current_size);
-        //}
-
+        buckets[bi].content = router_get_best_order(tosortpt, buckets[bi].content, buckets[bi].current_size);
         i = 0;
         while(i < buckets[bi].current_size)
         {
@@ -123,10 +119,11 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
             
         }
         //-------------------------------------fine versione ottimizzata
-
+        */
         
-        /*
+        
         //------------------------------------versione funzionante
+        i = 0;
         while(i < buckets[bi].current_size)
         {
             size = tosortpt->current_size;
@@ -136,7 +133,7 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
             i++;
         }
         //------------------------------------fine versione funzionante
-        */
+       
         if (i != 0)
         {
             temp = array_find_int(tosortpt->content, size, temp);

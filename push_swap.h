@@ -96,6 +96,9 @@ int	*array_rm_index(int *arr, int arr_size, int index);
 int	*array_rotate(int *arr, int arr_size, int dir);
 void array_duplicate(int *arr, int *destarr, int size);
 int	**array_get_combos(int *arr, int size, int iterations);
+int	**array_get_rcombos(int *arr, int size, int iterations);
+
+void	array_shuffle(int *arr, int size, int seed);
 
 void minmax_do1step(t_stack *stack_apt, t_stack *stack_bpt);
 

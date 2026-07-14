@@ -56,3 +56,24 @@ int	**array_get_combos(int *arr, int size, int iterations)
 	ft_permute(arr, 0, &util);
 	return (result);
 }
+
+int	**array_get_rcombos(int *arr, int size, int iterations)
+{
+	int	**result;
+	int	i;
+	
+	result = (int **)malloc(iterations * sizeof(int *));
+	if (!result)
+		return (NULL);
+
+	i = 0;
+	while (i < iterations)
+	{
+		result[i] = malloc(sizeof(int) * size);
+		array_duplicate(arr, result[i], size);
+		if (i)
+			array_shuffle(result[i], size, i);
+		i++;
+	}
+	return (result);
+}

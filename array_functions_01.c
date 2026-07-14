@@ -96,3 +96,33 @@ void array_duplicate(int *arr, int *destarr, int size)
 		i++;
 	}
 }
+
+static int	seedgen(unsigned int *seed)
+{
+	*seed = *seed * 1103515245 + 12345;
+	return ((int)(*seed / 65536) % 32768);
+}
+
+void	array_shuffle(int *arr, int size, int seed)
+{
+	int				i;
+	int				j;
+	int				temp;
+	unsigned int	current_seed;
+
+	if (!arr || size <= 1)
+		return ;
+
+	//if (seed == 0)
+	//	return;
+	current_seed = (unsigned int)seed;
+	i = size - 1;
+	while (i > 0)
+	{
+		j = seedgen(&current_seed) % (i + 1);
+		temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+		i--;
+	}
+}
