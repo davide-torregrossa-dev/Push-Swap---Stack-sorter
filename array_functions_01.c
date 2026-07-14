@@ -113,8 +113,6 @@ void	array_shuffle(int *arr, int size, int seed)
 	if (!arr || size <= 1)
 		return ;
 
-	//if (seed == 0)
-	//	return;
 	current_seed = (unsigned int)seed;
 	i = size - 1;
 	while (i > 0)

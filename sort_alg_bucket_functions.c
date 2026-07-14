@@ -29,12 +29,12 @@ static void bucket_fill(t_stack *stackpt, t_stack *bucketpt, int rmin, int rmax)
 {
     int i;
 
-    i = 0;
-    while (i < stackpt->current_size)
+    i = stackpt->current_size-1;
+    while (i > -1)
     {
         if (int_in_range(stackpt->content[i], rmin, rmax))
             stack_append(bucketpt, stackpt->content[i]);
-        i++;
+        i--;
     }
 }
 
@@ -84,6 +84,13 @@ t_stack *bucketsort_init(t_stack *stackpt)
     return (buckets);
 }
 
+
+
+
+
+
+
+
 void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *buckets)
 {
     int bi;
@@ -92,37 +99,12 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
     int size;
     int temp;
 
-
-
     bi = 0;
     while(buckets[bi+1].name)
         bi++;
-    
     while(bi != -1)
     {
-        
-        
-        
-        /*
-        //stack_print(buckets[bi]);
-        //------------------------------------versione ottimizzata
-        buckets[bi].content = router_get_best_order(tosortpt, buckets[bi].content, buckets[bi].current_size);
-        i = 0;
-        while(i < buckets[bi].current_size)
-        {
-            //printf("s");
-            size = tosortpt->current_size;
-            idx = array_find_int(tosortpt->content, tosortpt->current_size, buckets[bi].content[i]);
-            r_goto_index(tosortpt, idx);
-            p(tosortpt, second_stackpt);
-            i++;
-            
-        }
-        //-------------------------------------fine versione ottimizzata
-        */
-        
-        
-        //------------------------------------versione funzionante
+        //buckets[bi].content = router_get_best_order(tosortpt, buckets[bi].content, buckets[bi].current_size);
         i = 0;
         while(i < buckets[bi].current_size)
         {
@@ -132,22 +114,18 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
             p(tosortpt, second_stackpt);
             i++;
         }
-        //------------------------------------fine versione funzionante
-       
         if (i != 0)
         {
             temp = array_find_int(tosortpt->content, size, temp);
             r_goto_index(tosortpt, temp);
         }
-        while(second_stackpt -> current_size)
+        while(second_stackpt -> current_size != 0)
         {
             idx = array_find_max_index(second_stackpt->content, second_stackpt->current_size);
             r_goto_index(second_stackpt, idx);
             p(second_stackpt, tosortpt);
-            
         }
         temp = tosortpt->content[0];
         bi--;
     }
-    //stack_print(*tosortpt);
 }
