@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   stack_low_manip_functions_00.c                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/14 13:38:56 by dtorregr          #+#    #+#             */
+/*   Updated: 2026/07/14 13:38:57 by dtorregr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void stack_init(t_stack *stackpt, char name, int *content, int size)
+void	stack_init(t_stack *stackpt, char name, int *content, int size)
 {
 	if (content == NULL)
 	{

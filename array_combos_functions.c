@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   array_combos_functions.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/14 13:47:19 by dtorregr          #+#    #+#             */
+/*   Updated: 2026/07/14 13:47:52 by dtorregr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
-
-
 
 static void	ft_copy_row(t_combos *util, int *arr)
 {
 	int	i;
+
 	if (util->current_row >= util->max_iterations)
 		return ;
 	util->result[util->current_row] = (int *)malloc(util->size * sizeof(int));
@@ -24,8 +35,7 @@ void	ft_permute(int *arr, int start, t_combos *util)
 	int	i;
 
 	if (util->current_row >= util->max_iterations)
-		return;
-
+		return ;
 	if (start == util->size - 1)
 	{
 		ft_copy_row(util, arr);
@@ -45,7 +55,7 @@ int	**array_get_combos(int *arr, int size, int iterations)
 {
 	int			**result;
 	t_combos	util;
-	//printf("%s", "perm");
+
 	result = (int **)malloc(iterations * sizeof(int *));
 	if (!result)
 		return (NULL);
@@ -61,11 +71,10 @@ int	**array_get_rcombos(int *arr, int size, int iterations)
 {
 	int	**result;
 	int	i;
-	
+
 	result = (int **)malloc(iterations * sizeof(int *));
 	if (!result)
 		return (NULL);
-
 	i = 0;
 	while (i < iterations)
 	{

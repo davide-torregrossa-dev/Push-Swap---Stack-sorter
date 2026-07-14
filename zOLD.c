@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   zOLD.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/14 13:38:00 by dtorregr          #+#    #+#             */
+/*   Updated: 2026/07/14 13:38:01 by dtorregr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 // stack_swap_indexes è rotta.
@@ -6,7 +18,6 @@
 // scrivere e integrare RRR!;
 
 //-------------------BASIC STACK MANIP FUNCS
-
 
 /*
 void	rrr(t_stack *stack_apt, t_stack *stack_bpt, int times) {
@@ -52,7 +63,3 @@ void	stack_swap_indexes(t_stack *mainpt, t_stack *stachept, int i1, int i2)
 	r(mainpt, -i1);
 	p(stachept, mainpt);
 }
-
-
-
-

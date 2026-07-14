@@ -54,7 +54,7 @@ int	array_find_int(int *arr, int size, int query)
 	return (-1);
 }
 
-int	array_find_min_index(int *arr,int size)
+int	array_find_min_index(int *arr, int size)
 {
 	int	mini;
 	int	i;
@@ -86,41 +86,14 @@ int	array_find_max_index(int *arr, int size)
 	return (maxi);
 }
 
-void array_duplicate(int *arr, int *destarr, int size)
+void	array_duplicate(int *arr, int *destarr, int size)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	while(i < size) {
+	while (i < size)
+	{
 		destarr[i] = arr[i];
 		i++;
-	}
-}
-
-static int	seedgen(unsigned int *seed)
-{
-	*seed = *seed * 1103515245 + 12345;
-	return ((int)(*seed / 65536) % 32768);
-}
-
-void	array_shuffle(int *arr, int size, int seed)
-{
-	int				i;
-	int				j;
-	int				temp;
-	unsigned int	current_seed;
-
-	if (!arr || size <= 1)
-		return ;
-
-	current_seed = (unsigned int)seed;
-	i = size - 1;
-	while (i > 0)
-	{
-		j = seedgen(&current_seed) % (i + 1);
-		temp = arr[i];
-		arr[i] = arr[j];
-		arr[j] = temp;
-		i--;
 	}
 }

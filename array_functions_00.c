@@ -93,4 +93,3 @@ int	*array_rm_index(int *arr, int arr_size, int index)
 	free(arr);
 	return (out);
 }
-

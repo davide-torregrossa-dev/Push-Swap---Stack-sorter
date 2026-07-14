@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//integrare un counter per le mosse
+// integrare un counter per le mosse
 
 #include "push_swap.h"
 
@@ -22,19 +22,9 @@ int	main(int ac, char **av)
 
 	program_and_stack_init(av, ac, &program, &a);
 	stack_init(&b, 'b', NULL, 0);
-
-
-
-
-
-
-
-	
-
-	//in caso di bucketsort
-		bucketsort_loop(&a, &b, bucketsort_init(&a));
-		//stack_print(a);
-
+	// in caso di bucketsort
+	bucketsort_loop(&a, &b, bucketsort_init(&a));
+	stack_print(a);
 	/*
 		//in caso di simple
 		p_pour(&a, &b);
@@ -43,37 +33,25 @@ int	main(int ac, char **av)
 		r_realign(&a);
 		stack_print(a);
 	*/
-
-		/*
-	
-	
-	
-		//test combo
-	int *test = malloc(5 * sizeof(int));
-	
-	int	i;
-	int	j;
-	int	total;
-	test[0] = 10;
-	test[1] = 20;
-	test[2] = 30;
-	test[3] = 40;
-	test[4] = 50;
-	int **out = array_get_all_combos(test, 5);
-	total = factorialof(5);
-	i = 0;
-
-
-	while (i < total)
+	/*
+	//test combo
+test[0] = 10;
+test[1] = 20;
+test[2] = 30;
+test[3] = 40;
+test[4] = 50;
+total = factorialof(5);
+i = 0;
+while (i < total)
+{
+	j = 0;
+	while (j < 5)
 	{
-		j = 0;
-		while (j < 5)
-		{
-			printf("%d ", out[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
+		printf("%d ", out[i][j]);
+		j++;
 	}
+	printf("\n");
+	i++;
+}
 */
 }

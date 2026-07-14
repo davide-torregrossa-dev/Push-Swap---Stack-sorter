@@ -14,11 +14,11 @@
 
 double	calculate_disorder(t_stack *stack_apt)
 {
-	int	i;
-	int	j;
-	double mistakes;
-	double total_pairs;
-	int size;
+	int		i;
+	int		j;
+	double	mistakes;
+	double	total_pairs;
+	int		size;
 
 	size = stack_apt->current_size;
 	if (size < 2)
