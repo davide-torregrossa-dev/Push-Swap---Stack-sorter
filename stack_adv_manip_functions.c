@@ -76,16 +76,16 @@ int *router_get_best_order(t_stack *stackpt, int *stops, int stops_size)
     int *out;
 
     best_is_at_index = 0;
-    printf("%d-----------------------------------\n\n\n", stops_size);
-	combos_amt = 50;
-	if (stops_size < 8)
+    //printf("%d-----------------------------------\n\n\n", stops_size);
+	combos_amt = 6000;
+	if (stops_size <= 7)
 		combos_amt = factorialof(stops_size);
-    printf("%d-----------------------------------\n\n\n", combos_amt);
+    //printf("%d-----------------------------------\n\n\n", combos_amt);
     combos = array_get_combos(stops, stops_size, combos_amt);
     i = 0;
     while (i < combos_amt)
     {
-        printf("i = %d--------------------%d\n\n\n", i, stops_size);
+        //printf("i = %d--------------------%d\n\n\n", i, stops_size);
         if (router_calc_routecost(stackpt, combos[i], stops_size) < 
             router_calc_routecost(stackpt, combos[best_is_at_index], stops_size))
             best_is_at_index = i;

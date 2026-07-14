@@ -104,7 +104,7 @@ void bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt, t_stack *bucket
         
         
         
-        stack_print(buckets[bi]);
+        //stack_print(buckets[bi]);
         //------------------------------------versione ottimizzata
         
         //if (buckets[bi].current_size < 12) {

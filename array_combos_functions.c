@@ -5,7 +5,8 @@
 static void	ft_copy_row(t_combos *util, int *arr)
 {
 	int	i;
-
+	if (util->current_row >= util->max_iterations)
+		return ;
 	util->result[util->current_row] = (int *)malloc(util->size * sizeof(int));
 	if (!util->result[util->current_row])
 		return ;
@@ -21,6 +22,9 @@ static void	ft_copy_row(t_combos *util, int *arr)
 void	ft_permute(int *arr, int start, t_combos *util)
 {
 	int	i;
+
+	if (util->current_row >= util->max_iterations)
+		return;
 
 	if (start == util->size - 1)
 	{
@@ -41,13 +45,14 @@ int	**array_get_combos(int *arr, int size, int iterations)
 {
 	int			**result;
 	t_combos	util;
-	printf("%s", "perm");
+	//printf("%s", "perm");
 	result = (int **)malloc(iterations * sizeof(int *));
 	if (!result)
 		return (NULL);
 	util.result = result;
 	util.current_row = 0;
 	util.size = size;
+	util.max_iterations = iterations;
 	ft_permute(arr, 0, &util);
 	return (result);
 }

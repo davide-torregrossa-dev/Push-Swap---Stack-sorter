@@ -33,7 +33,7 @@ int	main(int ac, char **av)
 
 	//in caso di bucketsort
 		bucketsort_loop(&a, &b, bucketsort_init(&a));
-		stack_print(a);
+		//stack_print(a);
 
 	/*
 		//in caso di simple
