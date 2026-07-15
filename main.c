@@ -24,7 +24,6 @@ int	main(int ac, char **av)
 	stack_init(&b, 'b', NULL, 0);
 	// in caso di bucketsort
 	bucketsort_loop(&a, &b, bucketsort_init(&a));
-	stack_print(a);
 	/*
 		//in caso di simple
 		p_pour(&a, &b);

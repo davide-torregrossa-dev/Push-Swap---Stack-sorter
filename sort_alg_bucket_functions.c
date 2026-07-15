@@ -41,18 +41,19 @@ static void	bucket_remove_duplicates(t_stack *bucket, t_stack *ref)
 {
 	int	i;
 	int	query;
-	int	refsize;
 	int	foundat;
 
 	i = 0;
-	refsize = ref->current_size;
 	while (i < bucket->current_size)
 	{
 		query = bucket->content[i];
-		foundat = array_find_int(ref->content, refsize, query);
+		foundat = array_find_int(ref->content, ref->current_size, query);
 		if (foundat != -1)
+		{
 			stack_rm_index(bucket, i);
-		i++;
+		}
+		else
+			i++;
 	}
 }
 
@@ -64,25 +65,27 @@ t_stack	*bucketsort_init(t_stack *stackpt)
 	int		nbuckets;
 
 	nbuckets = ft_sqrt(stackpt->current_size);
+	if (nbuckets < 1)
+		nbuckets = 1;
 	brg = calculate_bucket_range_gap(stackpt, nbuckets);
-	buckets = malloc(sizeof(t_stack) * (nbuckets));
+	/* allocate an extra slot for the sentinel */
+	buckets = malloc(sizeof(t_stack) * (nbuckets + 1));
 	if (!buckets)
 	{
-		// free su malloc precedenti (smalloc)
+		/* free su malloc precedenti (smalloc) */
 		exit(1);
 	}
 	bucket_i = 0;
 	while (bucket_i < nbuckets)
 	{
 		stack_init(&buckets[bucket_i], 'z', NULL, 0);
-		bucket_fill(stackpt, &buckets[bucket_i], brg * bucket_i, brg * (bucket_i
-				+ 1));
+		bucket_fill(stackpt, &buckets[bucket_i], brg * bucket_i,
+			brg * (bucket_i + 1));
 		if (bucket_i != 0)
-			bucket_remove_duplicates(&buckets[bucket_i], &buckets[bucket_i
-				- 1]);
+			bucket_remove_duplicates(&buckets[bucket_i], &buckets[bucket_i - 1]);
 		bucket_i++;
 	}
-	buckets[nbuckets].name = '\0';
+	stack_init(&buckets[nbuckets], '\0', NULL, 0);
 	return (buckets);
 }
 
@@ -94,7 +97,7 @@ void	bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt,
 	int	idx;
 	int	size;
 	int	temp;
-	stack_print(*tosortpt);
+	
 	bi = 0;
 	while (buckets[bi + 1].name)
 		bi++;
@@ -103,7 +106,6 @@ void	bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt,
 		// buckets[bi].content = router_get_best_order(tosortpt,
 		//		buckets[bi].content, buckets[bi].current_size);
 		i = 0;
-		stack_print(buckets[bi]);
 		while (i < buckets[bi].current_size)
 		{
 			
