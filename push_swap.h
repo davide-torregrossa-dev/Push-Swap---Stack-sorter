@@ -70,7 +70,7 @@ void		r(t_stack *stackpt, int times);
 void		p_pour(t_stack *stack_frompt, t_stack *stack_topt);
 void		r_realign(t_stack *stackpt);
 void		r_goto_index(t_stack *stackpt, int index);
-int			rcost_goto_index(t_stack *stackpt, int from_index,
+int			router_calc_lanecost(t_stack *stackpt, int from_index,
 				int target_index);
 
 void		stack_init(t_stack *stackpt, char name, int *content, int size);

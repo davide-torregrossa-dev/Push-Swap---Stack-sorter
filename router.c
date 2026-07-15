@@ -12,6 +12,22 @@
 
 #include "push_swap.h"
 
+int	router_calc_lanecost(t_stack *stackpt, int from_index, int target_index)
+{
+	int	size;
+	int	virtual_index;
+	int	steps;
+
+	size = stackpt->current_size;
+	virtual_index = target_index - from_index;
+	if (virtual_index < 0)
+		virtual_index += size;
+	steps = size - virtual_index;
+	if (virtual_index < size / 2)
+		steps = -virtual_index;
+	return (ft_abs(steps));
+}
+
 int	router_calc_routecost(t_stack *stackpt, int *stops, int stops_size)
 {
 	int	cost;
@@ -29,11 +45,11 @@ int	router_calc_routecost(t_stack *stackpt, int *stops, int stops_size)
 		i++;
 	}
 	cost = 0;
-	cost += rcost_goto_index(stackpt, 0, indexes[0]);
+	cost += router_calc_lanecost(stackpt, 0, indexes[0]);
 	i = 0;
 	while (i < stops_size - 1)
 	{
-		cost += rcost_goto_index(stackpt, indexes[i], indexes[i + 1]);
+		cost += router_calc_lanecost(stackpt, indexes[i], indexes[i + 1]);
 		i++;
 	}
 	free(indexes);

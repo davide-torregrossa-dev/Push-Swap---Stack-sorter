@@ -94,7 +94,7 @@ void	bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt,
 	int	idx;
 	int	size;
 	int	temp;
-
+	stack_print(*tosortpt);
 	bi = 0;
 	while (buckets[bi + 1].name)
 		bi++;
@@ -103,8 +103,10 @@ void	bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt,
 		// buckets[bi].content = router_get_best_order(tosortpt,
 		//		buckets[bi].content, buckets[bi].current_size);
 		i = 0;
+		stack_print(buckets[bi]);
 		while (i < buckets[bi].current_size)
 		{
+			
 			size = tosortpt->current_size;
 			idx = array_find_int(tosortpt->content, size,
 					buckets[bi].content[i]);
