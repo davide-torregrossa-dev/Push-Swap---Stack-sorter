@@ -3,16 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egarlasc <egarlasc@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/24 11:33:55 by egarlasc          #+#    #+#             */
-/*   Updated: 2026/07/07 16:32:36 by egarlasc         ###   ########.fr       */
+/*   Created: 2026/07/19 13:06:25 by dtorregr          #+#    #+#             */
+/*   Updated: 2026/07/19 13:06:26 by dtorregr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// integrare un counter per le mosse
-
 #include "push_swap.h"
+
+// Trattare casi con <5 di size.
+// integrare bench.
+// vedere i vari leak e nullcheck.
+static int	disorder_to_strategy(double disorder)
+{
+	if (disorder < 0.2)
+		return (STRATEGIES_SIMPLE);
+	else if (disorder < 0.5)
+		return (STRATEGIES_MEDIUM);
+	return (STRATEGIES_COMPLEX);
+}
 
 int	main(int ac, char **av)
 {
@@ -22,35 +32,16 @@ int	main(int ac, char **av)
 
 	program_and_stack_init(av, ac, &program, &a);
 	stack_init(&b, 'b', NULL, 0);
-	// in caso di bucketsort
-	bucketsort_loop(&a, &b, bucketsort_init(&a));
-	/*
-		//in caso di simple
-		p_pour(&a, &b);
-		while (b.current_size != 0)
-			minmax_do1step(&b, &a);
-		r_realign(&a);
-		stack_print(a);
-	*/
-	/*
-	//test combo
-test[0] = 10;
-test[1] = 20;
-test[2] = 30;
-test[3] = 40;
-test[4] = 50;
-total = factorialof(5);
-i = 0;
-while (i < total)
-{
-	j = 0;
-	while (j < 5)
-	{
-		printf("%d ", out[i][j]);
-		j++;
-	}
-	printf("\n");
-	i++;
-}
-*/
+	if (program.strategy == STRATEGIES_ADAPTIVE
+		|| program.strategy == STRATEGIES_ADAPTIVE_CLI)
+		program.strategy = disorder_to_strategy(stack_calc_disorder(&a));
+	else if (program.strategy == STRATEGIES_SIMPLE)
+		minmax(&a, &b); // leaks ok
+	else if (program.strategy == STRATEGIES_MEDIUM)
+		bucketsort(&a, &b, bucketsort_init(&a));
+	else
+		radix_sort(&a, &b); // leaks ok
+	stack_print(a);
+	free(a.content);
+	free(b.content);
 }

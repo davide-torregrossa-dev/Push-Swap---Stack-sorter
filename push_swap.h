@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egarlasc <egarlasc@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/30 13:26:40 by egarlasc          #+#    #+#             */
-/*   Updated: 2026/07/06 16:23:06 by egarlasc         ###   ########.fr       */
+/*   Created: 2026/07/19 17:26:06 by dtorregr          #+#    #+#             */
+/*   Updated: 2026/07/19 17:26:07 by dtorregr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ typedef struct s_stack
 	int		current_size;
 	int		offset;
 	char	name;
+	int		swaps;
+	int		pushes;
+	int		rots;
+	int		revrots;
+	int		biswaps;
+	int		birots;
+	int		birevrots;
 }			t_stack;
 
 typedef struct s_bucket
@@ -43,20 +50,11 @@ typedef struct s_bucket
 	int		minr;
 }			t_bucket;
 
-typedef struct s_combos
-{
-	int		**result;
-	int		current_row;
-	int		size;
-	int		max_iterations;
-}			t_combos;
-
 void		fail(void);
 
 void		program_and_stack_init(char **av, int ac, t_program *programpt,
 				t_stack *stack_apt);
 int			input_get_strategy(char **av, int bench_flag_found);
-double		calculate_disorder(t_stack *stack_apt);
 
 int			char_to_number(const char c);
 
@@ -70,15 +68,14 @@ void		r(t_stack *stackpt, int times);
 void		p_pour(t_stack *stack_frompt, t_stack *stack_topt);
 void		r_realign(t_stack *stackpt);
 void		r_goto_index(t_stack *stackpt, int index);
-int			router_calc_lanecost(t_stack *stackpt, int from_index,
-				int target_index);
 
-void		stack_init(t_stack *stackpt, char name, int *content, int size);
+int			stack_init(t_stack *stackpt, char name, int *content, int size);
 void		stack_print(t_stack stack);
 
-void		stack_append(t_stack *stackpt, int value);
-void		stack_prepend(t_stack *stackpt, int value);
-void		stack_rm_index(t_stack *stackpt, int index);
+double		stack_calc_disorder(t_stack *stack_apt);
+int			stack_append(t_stack *stackpt, int value);
+int			stack_prepend(t_stack *stackpt, int value);
+int			stack_rm_index(t_stack *stackpt, int index);
 void		stack_rotate(t_stack *stackpt, int dir);
 
 int			array_find_string(char **arr, int size, char *query);
@@ -91,24 +88,30 @@ int			*array_prepend(int *arr, int arr_size, int value);
 int			*array_rm_index(int *arr, int arr_size, int index);
 int			*array_rotate(int *arr, int arr_size, int dir);
 void		array_duplicate(int *arr, int *destarr, int size);
-int			**array_get_combos(int *arr, int size, int iterations);
 int			**array_get_rcombos(int *arr, int size, int iterations);
-
 void		array_shuffle(int *arr, int size, int seed);
 
+void		minmax(t_stack *a, t_stack *b);
 void		minmax_do1step(t_stack *stack_apt, t_stack *stack_bpt);
 
 t_stack		*bucketsort_init(t_stack *stackpt);
-void		bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt,
+void		bucketsort(t_stack *tosortpt, t_stack *second_stackpt,
 				t_stack *buckets);
+
+void		radix_sort(t_stack *tosortpt, t_stack *second_stackpt);
 
 int			ft_abs(int n);
 int			ft_sqrt(int n);
 int			int_in_range(int n, int min, int max);
-
-void		swap(int *a, int *b);
 int			factorialof(int n);
 
 int			*router_get_best_order(t_stack *stackpt, int *stops,
 				int stops_size);
+
+/*
+int	router_calc_lanecost(t_stack *stackpt, int from_index,
+				int target_index);
+
+
 int			router_calc_routecost(t_stack *stackpt, int *stops, int stops_size);
+*/

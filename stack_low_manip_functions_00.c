@@ -12,19 +12,20 @@
 
 #include "push_swap.h"
 
-void	stack_init(t_stack *stackpt, char name, int *content, int size)
+int	stack_init(t_stack *stackpt, char name, int *content, int size)
 {
 	if (content == NULL)
 	{
 		content = malloc(0);
 		if (!content)
-			exit(1);
+			return (0);
 		size = 0;
 	}
 	stackpt->name = name;
 	stackpt->content = content;
 	stackpt->current_size = size;
 	stackpt->offset = 0;
+	return (1);
 }
 
 void	stack_print(t_stack stack)
@@ -44,23 +45,32 @@ void	stack_print(t_stack stack)
 	printf("-----------------\n");
 }
 
-void	stack_append(t_stack *stackpt, int value)
+int	stack_append(t_stack *stackpt, int value)
 {
 	stackpt->content = array_append(stackpt->content, stackpt->current_size,
 			value);
+	if (stackpt->content == NULL)
+		return (0);
 	stackpt->current_size++;
+	return (1);
 }
 
-void	stack_prepend(t_stack *stackpt, int value)
+int	stack_prepend(t_stack *stackpt, int value)
 {
 	stackpt->content = array_prepend(stackpt->content, stackpt->current_size,
 			value);
+	if (stackpt->content == NULL)
+		return (0);
 	stackpt->current_size++;
+	return (1);
 }
 
-void	stack_rm_index(t_stack *stackpt, int index)
+int	stack_rm_index(t_stack *stackpt, int index)
 {
 	stackpt->content = array_rm_index(stackpt->content, stackpt->current_size,
 			index);
+	if (stackpt->content == NULL)
+		return (0);
 	stackpt->current_size--;
+	return (1);
 }

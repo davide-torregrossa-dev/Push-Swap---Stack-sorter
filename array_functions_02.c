@@ -6,9 +6,11 @@
 /*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 13:45:51 by dtorregr          #+#    #+#             */
-/*   Updated: 2026/07/14 13:47:04 by dtorregr         ###   ########.fr       */
+/*   Updated: 2026/07/19 13:03:39 by dtorregr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "push_swap.h"
 
 static int	seedgen(unsigned int *seed)
 {
@@ -35,4 +37,24 @@ void	array_shuffle(int *arr, int size, int seed)
 		arr[j] = temp;
 		i--;
 	}
+}
+
+int	**array_get_rcombos(int *arr, int size, int iterations)
+{
+	int	**result;
+	int	i;
+
+	result = (int **)malloc(iterations * sizeof(int *));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < iterations)
+	{
+		result[i] = malloc(sizeof(int) * size);
+		array_duplicate(arr, result[i], size);
+		if (i)
+			array_shuffle(result[i], size, i);
+		i++;
+	}
+	return (result);
 }

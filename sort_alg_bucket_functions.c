@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_alg_bucket_functions.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egarlasc <egarlasc@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/07 17:26:08 by egarlasc          #+#    #+#             */
-/*   Updated: 2026/07/07 17:26:11 by egarlasc         ###   ########.fr       */
+/*   Created: 2026/07/19 16:54:49 by dtorregr          #+#    #+#             */
+/*   Updated: 2026/07/19 17:24:54 by dtorregr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,58 +57,61 @@ static void	bucket_remove_duplicates(t_stack *bucket, t_stack *ref)
 	}
 }
 
+void	fill_the_buckets(t_stack *stackpt, int brg, t_stack *buckets,
+		int nbuckets)
+{
+	int	bucket_i;
+
+	bucket_i = 0;
+	while (bucket_i < nbuckets)
+	{
+		stack_init(&buckets[bucket_i], 'z', NULL, 0);
+		bucket_fill(stackpt, &buckets[bucket_i], brg * bucket_i, brg * (bucket_i
+				+ 1));
+		if (bucket_i != 0)
+			bucket_remove_duplicates(&buckets[bucket_i], &buckets[bucket_i
+				- 1]);
+		bucket_i++;
+	}
+}
+
 t_stack	*bucketsort_init(t_stack *stackpt)
 {
 	t_stack	*buckets;
 	int		brg;
-	int		bucket_i;
 	int		nbuckets;
 
 	nbuckets = ft_sqrt(stackpt->current_size);
 	if (nbuckets < 1)
 		nbuckets = 1;
 	brg = calculate_bucket_range_gap(stackpt, nbuckets);
-	/* allocate an extra slot for the sentinel */
 	buckets = malloc(sizeof(t_stack) * (nbuckets + 1));
 	if (!buckets)
 	{
-		/* free su malloc precedenti (smalloc) */
+		/* free su malloc precedenti*/
 		exit(1);
 	}
-	bucket_i = 0;
-	while (bucket_i < nbuckets)
-	{
-		stack_init(&buckets[bucket_i], 'z', NULL, 0);
-		bucket_fill(stackpt, &buckets[bucket_i], brg * bucket_i,
-			brg * (bucket_i + 1));
-		if (bucket_i != 0)
-			bucket_remove_duplicates(&buckets[bucket_i], &buckets[bucket_i - 1]);
-		bucket_i++;
-	}
+	fill_the_buckets(stackpt, brg, buckets, nbuckets);
 	stack_init(&buckets[nbuckets], '\0', NULL, 0);
 	return (buckets);
 }
 
-void	bucketsort_loop(t_stack *tosortpt, t_stack *second_stackpt,
-		t_stack *buckets)
+void	bucketsort(t_stack *tosortpt, t_stack *second_stackpt, t_stack *buckets)
 {
 	int	bi;
 	int	i;
 	int	idx;
 	int	size;
 	int	temp;
-	
+
 	bi = 0;
 	while (buckets[bi + 1].name)
 		bi++;
 	while (bi != -1)
 	{
-		// buckets[bi].content = router_get_best_order(tosortpt,
-		//		buckets[bi].content, buckets[bi].current_size);
 		i = 0;
 		while (i < buckets[bi].current_size)
 		{
-			
 			size = tosortpt->current_size;
 			idx = array_find_int(tosortpt->content, size,
 					buckets[bi].content[i]);

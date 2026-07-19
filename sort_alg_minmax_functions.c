@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_alg_minmax_functions.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egarlasc <egarlasc@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/06 16:00:36 by egarlasc          #+#    #+#             */
-/*   Updated: 2026/07/14 13:42:27 by dtorregr         ###   ########.fr       */
+/*   Created: 2026/07/19 16:57:23 by dtorregr          #+#    #+#             */
+/*   Updated: 2026/07/19 16:57:27 by dtorregr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,12 @@ void	minmax_do1step(t_stack *stack_frompt, t_stack *stack_topt)
 		minmax_push_maxfirst(stack_frompt, stack_topt);
 	free(minmaxindexes);
 	r(stack_topt, -1);
+}
+
+void	minmax(t_stack *a, t_stack *b)
+{
+	p_pour(a, b);
+	while (b->current_size != 0)
+		minmax_do1step(b, a);
+	r_realign(a);
 }

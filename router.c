@@ -6,13 +6,14 @@
 /*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 13:44:19 by dtorregr          #+#    #+#             */
-/*   Updated: 2026/07/14 13:44:51 by dtorregr         ###   ########.fr       */
+/*   Updated: 2026/07/19 13:19:45 by dtorregr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	router_calc_lanecost(t_stack *stackpt, int from_index, int target_index)
+static int	router_calc_lanecost(t_stack *stackpt, int from_index,
+		int target_index)
 {
 	int	size;
 	int	virtual_index;
@@ -28,7 +29,7 @@ int	router_calc_lanecost(t_stack *stackpt, int from_index, int target_index)
 	return (ft_abs(steps));
 }
 
-int	router_calc_routecost(t_stack *stackpt, int *stops, int stops_size)
+static int	router_calc_routecost(t_stack *stackpt, int *stops, int stops_size)
 {
 	int	cost;
 	int	i;
@@ -56,20 +57,26 @@ int	router_calc_routecost(t_stack *stackpt, int *stops, int stops_size)
 	return (cost);
 }
 
-int	*router_get_best_order(t_stack *stackpt, int *stops, int stops_size)
+static void	combos_free(int **combos, int len)
 {
-	int	combos_amt;
-	int	**combos;
-	int	best_is_at_index;
 	int	i;
-	int	*out;
 
-	best_is_at_index = 0;
-	combos_amt = 25;
-	if (stops_size <= 7)
-		combos_amt = factorialof(stops_size);
-	combos = array_get_rcombos(stops, stops_size, combos_amt);
 	i = 0;
+	while (i < len)
+	{
+		free(combos[i]);
+		i++;
+	}
+	free(combos);
+}
+
+static int	foo(t_stack *stackpt, int **combos, int combos_amt, int stops_size)
+{
+	int	i;
+	int	best_is_at_index;
+
+	i = 0;
+	best_is_at_index = 0;
 	while (i < combos_amt)
 	{
 		if (router_calc_routecost(stackpt, combos[i],
@@ -78,25 +85,26 @@ int	*router_get_best_order(t_stack *stackpt, int *stops, int stops_size)
 			best_is_at_index = i;
 		i++;
 	}
+	return (best_is_at_index);
+}
+
+int	*router_get_best_order(t_stack *stackpt, int *stops, int stops_size)
+{
+	int	combos_amt;
+	int	**combos;
+	int	best_is_at_index;
+	int	*out;
+
+	best_is_at_index = 0;
+	combos_amt = 25;
+	if (stops_size <= 7)
+		combos_amt = factorialof(stops_size);
+	combos = array_get_rcombos(stops, stops_size, combos_amt);
+	best_is_at_index = foo(stackpt, combos, combos_amt, stops_size);
 	out = malloc(sizeof(int) * stops_size);
 	if (!out)
-	{
-		i = 0;
-		while (i < combos_amt)
-		{
-			free(combos[i]);
-			i++;
-		}
-		free(combos);
-		return (NULL);
-	}
+		return (combos_free(combos, combos_amt), NULL);
 	array_duplicate(combos[best_is_at_index], out, stops_size);
-	i = 0;
-	while (i < combos_amt)
-	{
-		free(combos[i]);
-		i++;
-	}
-	free(combos);
+	combos_free(combos, combos_amt);
 	return (out);
 }
