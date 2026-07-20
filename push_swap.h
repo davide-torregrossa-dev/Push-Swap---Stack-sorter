@@ -21,11 +21,30 @@
 #define STRATEGIES_COMPLEX 3
 #define STRATEGIES_ADAPTIVE 4
 
-typedef struct s_program
+typedef struct s_CLI_params
 {
 	int		strategy;
 	int		benchmode;
-}			t_program;
+}			t_CLI_params;
+
+typedef struct s_bench
+{
+	int		is_active;
+	int		pa;
+	int		pb;
+	int		sa;
+	int		sb;
+	int		ss;
+	int		ra;
+	int		rra;
+	int		rb;
+	int		rrb;
+	int		rr;
+	int		rrr;
+	int		strategy;
+	int		strategy_is_from_adaptive;
+	float	disorder;
+}			t_bench;
 
 typedef struct s_stack
 {
@@ -33,13 +52,7 @@ typedef struct s_stack
 	int		current_size;
 	int		offset;
 	char	name;
-	int		swaps;
-	int		pushes;
-	int		rots;
-	int		revrots;
-	int		biswaps;
-	int		birots;
-	int		birevrots;
+	t_bench	*bench;
 }			t_stack;
 
 typedef struct s_bucket
@@ -52,7 +65,7 @@ typedef struct s_bucket
 
 void		fail(void);
 
-void		program_and_stack_init(char **av, int ac, t_program *programpt,
+void		program_and_mainstack_init(char **av, int ac, t_CLI_params *CLI_paramspt,
 				t_stack *stack_apt);
 int			input_get_strategy(char **av, int bench_flag_found);
 
@@ -72,7 +85,7 @@ void		r_goto_index(t_stack *stackpt, int index);
 int			stack_init(t_stack *stackpt, char name, int *content, int size);
 void		stack_print(t_stack stack);
 
-double		stack_calc_disorder(t_stack *stack_apt);
+float		stack_calc_disorder(t_stack *stack_apt);
 int			stack_append(t_stack *stackpt, int value);
 int			stack_prepend(t_stack *stackpt, int value);
 int			stack_rm_index(t_stack *stackpt, int index);
@@ -100,6 +113,7 @@ void		bucketsort(t_stack *tosortpt, t_stack *second_stackpt,
 
 void		radix_sort(t_stack *tosortpt, t_stack *second_stackpt);
 
+float		float_truncate(float n, int decs);
 int			ft_abs(int n);
 int			ft_sqrt(int n);
 int			int_in_range(int n, int min, int max);

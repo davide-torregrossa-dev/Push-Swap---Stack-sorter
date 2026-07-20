@@ -67,7 +67,7 @@ static int	*atoi_batch_string(char **strings)
 	return (out);
 }
 
-void	program_and_stack_init(char **av, int ac, t_program *programpt,
+void	program_and_mainstack_init(char **av, int ac, t_CLI_params *CLI_paramspt,
 		t_stack *stack_apt)
 {
 	int	ints_start_from;
@@ -75,11 +75,12 @@ void	program_and_stack_init(char **av, int ac, t_program *programpt,
 
 	if (ac == 1)
 		exit(1);
-	programpt->benchmode = string_equals(av[1], "--bench");
-	programpt->strategy = STRATEGIES_ADAPTIVE;
-	programpt->strategy = input_get_strategy(av, programpt->benchmode);
-	ints_start_from = 1 + programpt->benchmode
-		+ (programpt->strategy != STRATEGIES_ADAPTIVE);
+	CLI_paramspt->benchmode = string_equals(av[1], "--bench");
+	stack_apt->bench->is_active = CLI_paramspt->benchmode;
+	CLI_paramspt->strategy = STRATEGIES_ADAPTIVE;
+	CLI_paramspt->strategy = input_get_strategy(av, CLI_paramspt->benchmode);
+	ints_start_from = 1 + CLI_paramspt->benchmode
+		+ (CLI_paramspt->strategy != STRATEGIES_ADAPTIVE);
 	if ((ac - ints_start_from) == 0)
 		fail();
 	stack_content = atoi_batch_string(&av[ints_start_from]);

@@ -19,12 +19,12 @@ void	stack_rotate(t_stack *stackpt, int dir)
 	stackpt->offset -= dir;
 }
 
-double	stack_calc_disorder(t_stack *stack_apt)
+float	stack_calc_disorder(t_stack *stack_apt)
 {
 	int		i;
 	int		j;
-	double	mistakes;
-	double	total_pairs;
+	float	mistakes;
+	float	total_pairs;
 	int		size;
 
 	size = stack_apt->current_size;
