@@ -125,9 +125,9 @@ int	main(int ac, char **av)
 		bench.strategy = disorder_to_strategy(stack_calc_disorder(&a));
 		bench.strategy_is_from_adaptive = 1;
 	}
-	if (CLI_params.strategy == STRATEGIES_SIMPLE)
+	if (bench.strategy == STRATEGIES_SIMPLE)
 		minmax(&a, &b); // leaks ok
-	else if (CLI_params.strategy == STRATEGIES_MEDIUM)
+	else if (bench.strategy == STRATEGIES_MEDIUM)
 		bucketsort(&a, &b, bucketsort_init(&a));
 	else
 		radix_sort(&a, &b); // leaks ok
