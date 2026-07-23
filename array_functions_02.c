@@ -58,3 +58,19 @@ int	**array_get_rcombos(int *arr, int size, int iterations)
 	}
 	return (result);
 }
+
+int	array_is_sorted(int *array, int array_size)
+{
+	int	i;
+
+	if (!array || array_size <= 1)
+		return (1);
+	i = 0;
+	while (i < array_size - 1)
+	{
+		if (array[i] > array[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}

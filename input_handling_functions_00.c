@@ -6,7 +6,7 @@
 /*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/19 13:03:56 by dtorregr          #+#    #+#             */
-/*   Updated: 2026/07/19 13:03:57 by dtorregr         ###   ########.fr       */
+/*   Updated: 2026/07/21 10:06:36 by dtorregr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static int	*atoi_batch_string(char **strings)
 	return (out);
 }
 
-void	program_and_mainstack_init(char **av, int ac, t_CLI_params *CLI_paramspt,
-		t_stack *stack_apt)
+void	program_and_mainstack_init(char **av, int ac,
+		t_cli_params *CLI_paramspt, t_stack *stack_apt)
 {
 	int	ints_start_from;
 	int	*stack_content;

@@ -16,7 +16,7 @@ void	s(t_stack *stackpt)
 {
 	if (stackpt->current_size >= 2)
 	{
-		printf("s%c\n", stackpt->name);
+		ft_printf("s%c\n", stackpt->name);
 		stackpt->content = array_swap_indexes(stackpt->content, 0, 1);
 		if (stackpt->name == 'a')
 			stackpt->bench->sa++;
@@ -29,7 +29,7 @@ void	p(t_stack *from_stackpt, t_stack *to_stackpt)
 {
 	if (from_stackpt->current_size != 0)
 	{
-		printf("p%c\n", from_stackpt->name);
+		ft_printf("p%c\n", from_stackpt->name);
 		stack_prepend(to_stackpt, from_stackpt->content[0]);
 		stack_rm_index(from_stackpt, 0);
 		if (from_stackpt->name == 'a')
@@ -72,7 +72,7 @@ void	r(t_stack *stackpt, int times)
 	{
 		op_ptr = r_msg_to_op_ptr(stackpt, msg);
 		(*op_ptr)++;
-		printf(msg, stackpt->name);
+		ft_printf(msg, stackpt->name);
 		stack_rotate(stackpt, dir);
 		times += dir;
 	}

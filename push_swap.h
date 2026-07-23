@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdarg.h>
 
 #define STRATEGIES_ADAPTIVE_CLI 0
 #define STRATEGIES_SIMPLE 1
@@ -21,11 +22,11 @@
 #define STRATEGIES_COMPLEX 3
 #define STRATEGIES_ADAPTIVE 4
 
-typedef struct s_CLI_params
+typedef struct s_cli_params
 {
 	int		strategy;
 	int		benchmode;
-}			t_CLI_params;
+}			t_cli_params;
 
 typedef struct s_bench
 {
@@ -65,8 +66,8 @@ typedef struct s_bucket
 
 void		fail(void);
 
-void		program_and_mainstack_init(char **av, int ac, t_CLI_params *CLI_paramspt,
-				t_stack *stack_apt);
+void		program_and_mainstack_init(char **av, int ac,
+				t_cli_params *CLI_paramspt, t_stack *stack_apt);
 int			input_get_strategy(char **av, int bench_flag_found);
 
 int			char_to_number(const char c);
@@ -74,17 +75,17 @@ int			char_to_number(const char c);
 int			string_is_number(const char *str);
 int			string_equals(const char *s1, const char *s2);
 
+void		bench_init(t_bench *benchpt, float disorder, int CLI_strategy);
+void		bench_print(t_bench bench);
+
 void		s(t_stack *stackpt);
 void		p(t_stack *from_stackpt, t_stack *to_stackpt);
 void		r(t_stack *stackpt, int times);
-
 void		p_pour(t_stack *stack_frompt, t_stack *stack_topt);
 void		r_realign(t_stack *stackpt);
 void		r_goto_index(t_stack *stackpt, int index);
-
 int			stack_init(t_stack *stackpt, char name, int *content, int size);
 void		stack_print(t_stack stack);
-
 float		stack_calc_disorder(t_stack *stack_apt);
 int			stack_append(t_stack *stackpt, int value);
 int			stack_prepend(t_stack *stackpt, int value);
@@ -103,10 +104,14 @@ int			*array_rotate(int *arr, int arr_size, int dir);
 void		array_duplicate(int *arr, int *destarr, int size);
 int			**array_get_rcombos(int *arr, int size, int iterations);
 void		array_shuffle(int *arr, int size, int seed);
+int			array_is_sorted(int *array, int array_size);
 
 void		minmax(t_stack *a, t_stack *b);
 void		minmax_do1step(t_stack *stack_apt, t_stack *stack_bpt);
 
+int			calculate_bucket_range_gap(t_stack *stackpt, int nbuckets);
+void		fill_the_buckets(t_stack *stackpt, int brg, t_stack *buckets,
+				int nbuckets);
 t_stack		*bucketsort_init(t_stack *stackpt);
 void		bucketsort(t_stack *tosortpt, t_stack *second_stackpt,
 				t_stack *buckets);
@@ -122,10 +127,11 @@ int			factorialof(int n);
 int			*router_get_best_order(t_stack *stackpt, int *stops,
 				int stops_size);
 
-/*
-int	router_calc_lanecost(t_stack *stackpt, int from_index,
-				int target_index);
-
-
-int			router_calc_routecost(t_stack *stackpt, int *stops, int stops_size);
-*/
+int			ft_printf(const char *str, ...);				
+int			ft_printf_dispatch(va_list var, char c);
+int			print_char(int c);
+int			print_string(char *str);
+int			print_uint(unsigned int n);
+int			print_dec(int n);
+int			print_hex(unsigned long n, int upper);
+int			print_ptr(void *ptr);
