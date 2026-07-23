@@ -37,6 +37,11 @@ int	input_get_strategy(char **av, int bench_flag_found)
 	flag_index = array_find_string(flagnames, 4, av[arg_index]);
 	if (flag_index == -1)
 	{
+		if (string_has_space(av[arg_index]))
+		{
+			free(flagnames);
+			return (STRATEGIES_ADAPTIVE);
+		}
 		if (!string_is_number(av[arg_index]))
 		{
 			free(flagnames);
@@ -47,3 +52,26 @@ int	input_get_strategy(char **av, int bench_flag_found)
 	free(flagnames);
 	return (flag_index);
 }
+/*
+int	input_get_strategy(char **av, int bench_flag_found)
+{
+	char	**flagnames;
+	int		flag_index;
+	int		arg_index;
+
+	arg_index = 1 + bench_flag_found;
+	flagnames = flagnames_array_create();
+	flag_index = array_find_string(flagnames, 4, av[arg_index]);
+	if (flag_index == -1)
+	{
+		if (!string_is_number(av[arg_index]))
+		{
+			free(flagnames);
+			fail();
+		}
+		flag_index = STRATEGIES_ADAPTIVE;
+	}
+	free(flagnames);
+	return (flag_index);
+}
+*/

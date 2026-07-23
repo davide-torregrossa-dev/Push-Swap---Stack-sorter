@@ -18,3 +18,11 @@ int	char_to_number(const char c)
 		return (c + '0');
 	return (-1);
 }
+
+int	char_is_space(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r')
+		return (1);
+	return (0);
+}

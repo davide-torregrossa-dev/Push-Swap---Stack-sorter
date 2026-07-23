@@ -78,7 +78,6 @@ int	main(int ac, char **av)
 
 	a.bench = &bench;
 	b.bench = &bench;
-
 	program_and_mainstack_init(av, ac, &cli_params, &a);
 	stack_init(&b, 'b', NULL, 0);
 	bench_init(&bench, stack_calc_disorder(&a), cli_params.strategy);
@@ -96,7 +95,7 @@ int	main(int ac, char **av)
 	free_the_stacks(&a, &b);
 }
 
-// aggiustare makefile 
+// aggiustare makefile
 // fixare print del bench.
 // vedere leak in bucketsort
 // vedere tutti i nullcheck

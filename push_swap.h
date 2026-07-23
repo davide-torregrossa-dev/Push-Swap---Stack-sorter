@@ -69,14 +69,16 @@ void		fail(void);
 void		program_and_mainstack_init(char **av, int ac,
 				t_cli_params *CLI_paramspt, t_stack *stack_apt);
 int			input_get_strategy(char **av, int bench_flag_found);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		**ft_split(char const *s, char c);
-size_t	ft_strlen(const char *str);
+size_t		ft_strlen(const char *str);
 
 int			char_to_number(const char c);
+int			char_is_space(char c);
 
 int			string_is_number(const char *str);
 int			string_equals(const char *s1, const char *s2);
+int			string_has_space(const char *s);
 
 void		bench_init(t_bench *benchpt, float disorder, int CLI_strategy);
 void		bench_print(t_bench bench);
@@ -138,3 +140,9 @@ int			print_uint(unsigned int n);
 int			print_dec(int n);
 int			print_hex(unsigned long n, int upper);
 int			print_ptr(void *ptr);
+
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+
+int			string_has_space(const char *s);
+
+char		*ft_strdup(const char *s);

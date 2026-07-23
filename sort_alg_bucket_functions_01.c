@@ -50,18 +50,19 @@ static void	put_bucketnums_in_stackb(t_stack bucket, t_stack *tosortpt,
 	}
 }
 
-void 	buckets_free(t_stack *buckets)
+void	buckets_free(t_stack *buckets)
 {
-    int bi;
-	
+	int	bi;
+
 	bi = 0;
-    while (buckets[bi].name)
-    {
-        free(buckets[bi].content);
-        bi++;
-    }
-    free(buckets);
+	while (buckets[bi].name)
+	{
+		free(buckets[bi].content);
+		bi++;
+	}
+	free(buckets);
 }
+
 void	bucketsort(t_stack *tosortpt, t_stack *second_stackpt, t_stack *buckets)
 {
 	int	bi;
