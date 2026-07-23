@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #include <limits.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdarg.h>
 
 #define STRATEGIES_ADAPTIVE_CLI 0
 #define STRATEGIES_SIMPLE 1
@@ -69,6 +69,9 @@ void		fail(void);
 void		program_and_mainstack_init(char **av, int ac,
 				t_cli_params *CLI_paramspt, t_stack *stack_apt);
 int			input_get_strategy(char **av, int bench_flag_found);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char		**ft_split(char const *s, char c);
+size_t	ft_strlen(const char *str);
 
 int			char_to_number(const char c);
 
@@ -127,7 +130,7 @@ int			factorialof(int n);
 int			*router_get_best_order(t_stack *stackpt, int *stops,
 				int stops_size);
 
-int			ft_printf(const char *str, ...);				
+int			ft_printf(const char *str, ...);
 int			ft_printf_dispatch(va_list var, char c);
 int			print_char(int c);
 int			print_string(char *str);

@@ -72,7 +72,7 @@ void	program_and_mainstack_init(char **av, int ac,
 {
 	int	ints_start_from;
 	int	*stack_content;
-
+	char **normalized_args;
 	if (ac == 1)
 		exit(1);
 	CLI_paramspt->benchmode = string_equals(av[1], "--bench");
@@ -83,9 +83,12 @@ void	program_and_mainstack_init(char **av, int ac,
 		+ (CLI_paramspt->strategy != STRATEGIES_ADAPTIVE);
 	if ((ac - ints_start_from) == 0)
 		fail();
-	stack_content = atoi_batch_string(&av[ints_start_from]);
+	normalized_args = ft_split(av[ints_start_from], ' ');
+	stack_content = atoi_batch_string(normalized_args);
+	free(normalized_args);
 	stack_init(stack_apt, 'a', stack_content, ac - ints_start_from);
 }
+
 
 void	fail(void)
 {

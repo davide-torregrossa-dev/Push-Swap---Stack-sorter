@@ -6,11 +6,44 @@
 /*   By: dtorregr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 12:46:42 by dtorregr          #+#    #+#             */
-/*   Updated: 2026/07/21 12:46:44 by dtorregr         ###   ########.fr       */
+/*   Updated: 2026/07/23 11:56:24 by dtorregr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+/*
+int	calculate_bucket_range_gap(t_stack *stackpt, int nbuckets)
+{
+	int	min;
+	int	max;
+
+	min = array_find_min_index(stackpt->content, stackpt->current_size);
+	min = stackpt->content[min];
+	max = array_find_max_index(stackpt->content, stackpt->current_size);
+	max = stackpt->content[max];
+	return ((max - min) / (nbuckets - 1));
+}
+
+void	fill_the_buckets(t_stack *stackpt, int brg, t_stack *buckets,
+		int nbuckets)
+{
+	int	bucket_i;
+
+	bucket_i = 0;
+	while (bucket_i < nbuckets)
+	{
+		stack_init(&buckets[bucket_i], 'z', NULL, 0);
+		bucket_fill(stackpt, &buckets[bucket_i], brg * bucket_i, brg * (bucket_i
+				+ 1));
+		if (bucket_i != 0)
+			bucket_remove_duplicates(&buckets[bucket_i], &buckets[bucket_i
+				- 1]);
+		bucket_i++;
+	}
+}
+
+*/
 
 int	calculate_bucket_range_gap(t_stack *stackpt, int nbuckets)
 {
@@ -21,6 +54,8 @@ int	calculate_bucket_range_gap(t_stack *stackpt, int nbuckets)
 	min = stackpt->content[min];
 	max = array_find_max_index(stackpt->content, stackpt->current_size);
 	max = stackpt->content[max];
+	if (nbuckets <= 1)
+		return (max - min);
 	return ((max - min) / (nbuckets - 1));
 }
 
@@ -61,13 +96,17 @@ void	fill_the_buckets(t_stack *stackpt, int brg, t_stack *buckets,
 		int nbuckets)
 {
 	int	bucket_i;
+	int	min_idx;
+	int	min_val;
 
+	min_idx = array_find_min_index(stackpt->content, stackpt->current_size);
+	min_val = stackpt->content[min_idx];
 	bucket_i = 0;
 	while (bucket_i < nbuckets)
 	{
 		stack_init(&buckets[bucket_i], 'z', NULL, 0);
-		bucket_fill(stackpt, &buckets[bucket_i], brg * bucket_i, brg * (bucket_i
-				+ 1));
+		bucket_fill(stackpt, &buckets[bucket_i], min_val + brg * bucket_i,
+			min_val + brg * (bucket_i + 1));
 		if (bucket_i != 0)
 			bucket_remove_duplicates(&buckets[bucket_i], &buckets[bucket_i
 				- 1]);

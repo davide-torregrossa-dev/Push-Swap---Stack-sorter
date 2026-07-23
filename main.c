@@ -18,9 +18,9 @@ static void	free_the_stacks(t_stack *apt, t_stack *bpt)
 	free(bpt->content);
 }
 
-static void sort_trio(t_stack *apt)
+static void	sort_trio(t_stack *apt)
 {
-	int max_at_index;
+	int	max_at_index;
 
 	max_at_index = array_find_max_index(apt->content, apt->current_size);
 	if (max_at_index == 0)
@@ -31,11 +31,11 @@ static void sort_trio(t_stack *apt)
 		s(apt);
 }
 
-static void sort_quad_or_more(t_stack *apt, t_stack *bpt)
+static void	sort_quad_or_more(t_stack *apt, t_stack *bpt)
 {
-	int min_at_index;
-	int i;
-	
+	int	min_at_index;
+	int	i;
+
 	i = 1 - (apt->current_size == 5);
 	while (i != 2)
 	{
@@ -59,7 +59,7 @@ static void	sort(t_bench *bench, t_stack *apt, t_stack *bpt)
 			sort_trio(apt);
 		else
 			sort_quad_or_more(apt, bpt);
-		return;
+		return ;
 	}
 	if (bench->strategy == STRATEGIES_SIMPLE)
 		minmax(apt, bpt);
@@ -78,10 +78,12 @@ int	main(int ac, char **av)
 
 	a.bench = &bench;
 	b.bench = &bench;
+
 	program_and_mainstack_init(av, ac, &cli_params, &a);
 	stack_init(&b, 'b', NULL, 0);
 	bench_init(&bench, stack_calc_disorder(&a), cli_params.strategy);
-	if (bench.strategy_is_from_adaptive) {
+	if (bench.strategy_is_from_adaptive)
+	{
 		if (!array_is_sorted(a.content, a.current_size))
 			sort(&bench, &a, &b);
 		else
@@ -94,8 +96,8 @@ int	main(int ac, char **av)
 	free_the_stacks(&a, &b);
 }
 
-
-//testare numeri negativi. (Non funziona mid e complex!)
+// aggiustare makefile 
+// fixare print del bench.
 // vedere leak in bucketsort
 // vedere tutti i nullcheck
-//ridare un nome alla funzione "foo"
+// ridare un nome alla funzione "foo"

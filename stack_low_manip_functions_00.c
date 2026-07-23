@@ -15,12 +15,7 @@
 int	stack_init(t_stack *stackpt, char name, int *content, int size)
 {
 	if (content == NULL)
-	{
-		content = malloc(0);
-		if (!content)
-			return (0);
 		size = 0;
-	}
 	stackpt->name = name;
 	stackpt->content = content;
 	stackpt->current_size = size;

@@ -63,6 +63,7 @@ void	minmax_do1step(t_stack *stack_frompt, t_stack *stack_topt)
 	else
 		minmax_push_maxfirst(stack_frompt, stack_topt);
 	free(minmaxindexes);
+	free(bestroute);
 	r(stack_topt, -1);
 }
 
