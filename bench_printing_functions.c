@@ -56,7 +56,12 @@ static void	bench_print_disorder(t_bench bench)
 	decs = (int)((pct - intt) * 100);
 	if (decs < 0)
 		decs = -decs;
-	ft_printf("[bench] disorder: %d.%02d%%\n", intt, decs); // fixme
+	ft_printf("[bench] disorder: %d.", intt);
+	if (decs < 10)
+		ft_printf("0%d", decs);
+	else
+		ft_printf("%d", decs);
+	ft_printf("%%\n");
 }
 
 void	bench_print(t_bench bench)

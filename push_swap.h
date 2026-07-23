@@ -106,7 +106,7 @@ int			*array_append(int *arr, int arr_size, int value);
 int			*array_prepend(int *arr, int arr_size, int value);
 int			*array_rm_index(int *arr, int arr_size, int index);
 int			*array_rotate(int *arr, int arr_size, int dir);
-void		array_duplicate(int *arr, int *destarr, int size);
+int			*array_duplicate(int *arr, int size);
 int			**array_get_rcombos(int *arr, int size, int iterations);
 void		array_shuffle(int *arr, int size, int seed);
 int			array_is_sorted(int *array, int array_size);
@@ -117,7 +117,7 @@ void		minmax_do1step(t_stack *stack_apt, t_stack *stack_bpt);
 int			calculate_bucket_range_gap(t_stack *stackpt, int nbuckets);
 void		fill_the_buckets(t_stack *stackpt, int brg, t_stack *buckets,
 				int nbuckets);
-t_stack		*bucketsort_init(t_stack *stackpt);
+t_stack		*bucketsort_init(t_stack *stackpt, t_stack *bstackpt);
 void		bucketsort(t_stack *tosortpt, t_stack *second_stackpt,
 				t_stack *buckets);
 

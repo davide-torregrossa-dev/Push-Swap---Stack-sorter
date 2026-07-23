@@ -82,15 +82,31 @@ static int	*atoi_batch_string(char **strings)
 	return (out);
 }
 
+static int	process_space_arg(char *arg, t_stack *stack_apt)
+{
+	char	**tokens;
+	int		size;
+	int		*content;
+
+	tokens = ft_split(arg, ' ');
+	if (!tokens)
+		fail();
+	size = 0;
+	while (tokens[size])
+		size++;
+	content = atoi_batch_string(tokens);
+	free_split(tokens);
+	stack_init(stack_apt, 'a', content, size);
+	return (1);
+}
+
 void	program_and_mainstack_init(char **av, int ac,
 		t_cli_params *CLI_paramspt, t_stack *stack_apt)
 {
-	int		ints_start_from;
-	int		n_args;
-	int		stack_size;
-	char	**tokens;
-	int		k;
-	int		*stack_content;
+	int	ints_start_from;
+	int	n_args;
+	int	*stack_content;
+	int	stack_size;
 
 	if (ac == 1)
 		exit(1);
@@ -103,41 +119,14 @@ void	program_and_mainstack_init(char **av, int ac,
 	n_args = ac - ints_start_from;
 	if (n_args == 0)
 		fail();
-	if (n_args == 1)
+	if (n_args == 1 && string_has_space(av[ints_start_from]))
 	{
-		tokens = NULL;
-		{
-			k = 0;
-			while (av[ints_start_from][k])
-			{
-				if (char_is_space(av[ints_start_from][k]))
-				{
-					tokens = ft_split(av[ints_start_from], ' ');
-					break ;
-				}
-				k++;
-			}
-		}
-		if (tokens != NULL)
-		{
-			stack_size = 0;
-			while (tokens[stack_size])
-				stack_size++;
-			stack_content = atoi_batch_string(tokens);
-			free_split(tokens);
-			stack_init(stack_apt, 'a', stack_content, stack_size);
-			return ;
-		}
+		process_space_arg(av[ints_start_from], stack_apt);
+		return ;
 	}
 	stack_size = n_args;
 	stack_content = atoi_batch_string(&av[ints_start_from]);
 	stack_init(stack_apt, 'a', stack_content, stack_size);
-}
-
-void	fail(void)
-{
-	write(1, "Error\n", 6);
-	exit(1);
 }
 /*
 static int	atoi_check(const char *nptr)

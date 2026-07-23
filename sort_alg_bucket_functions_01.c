@@ -12,7 +12,20 @@
 
 #include "push_swap.h"
 
-t_stack	*bucketsort_init(t_stack *stackpt)
+void	buckets_free(t_stack *buckets)
+{
+	int	bi;
+
+	bi = 0;
+	while (buckets[bi].name)
+	{
+		free(buckets[bi].content);
+		bi++;
+	}
+	free(buckets);
+}
+
+t_stack	*bucketsort_init(t_stack *stackpt, t_stack *bstackpt)
 {
 	t_stack	*buckets;
 	int		brg;
@@ -25,7 +38,9 @@ t_stack	*bucketsort_init(t_stack *stackpt)
 	buckets = malloc(sizeof(t_stack) * (nbuckets + 1));
 	if (!buckets)
 	{
-		/* free su malloc precedenti*/
+		free(stackpt->content);
+		free(bstackpt->content);
+		buckets_free(buckets);
 		exit(1);
 	}
 	fill_the_buckets(stackpt, brg, buckets, nbuckets);
@@ -48,19 +63,6 @@ static void	put_bucketnums_in_stackb(t_stack bucket, t_stack *tosortpt,
 		p(tosortpt, second_stackpt);
 		i++;
 	}
-}
-
-void	buckets_free(t_stack *buckets)
-{
-	int	bi;
-
-	bi = 0;
-	while (buckets[bi].name)
-	{
-		free(buckets[bi].content);
-		bi++;
-	}
-	free(buckets);
 }
 
 void	bucketsort(t_stack *tosortpt, t_stack *second_stackpt, t_stack *buckets)

@@ -70,7 +70,8 @@ static void	combos_free(int **combos, int len)
 	free(combos);
 }
 
-static int	foo(t_stack *stackpt, int **combos, int combos_amt, int stops_size)
+static int	router_find_cheapest_combo(t_stack *stackpt, int **combos,
+		int combos_amt, int stops_size)
 {
 	int	i;
 	int	best_is_at_index;
@@ -100,11 +101,9 @@ int	*router_get_best_order(t_stack *stackpt, int *stops, int stops_size)
 	if (stops_size <= 7)
 		combos_amt = factorialof(stops_size);
 	combos = array_get_rcombos(stops, stops_size, combos_amt);
-	best_is_at_index = foo(stackpt, combos, combos_amt, stops_size);
-	out = malloc(sizeof(int) * stops_size);
-	if (!out)
-		return (combos_free(combos, combos_amt), NULL);
-	array_duplicate(combos[best_is_at_index], out, stops_size);
+	best_is_at_index = router_find_cheapest_combo(stackpt, combos, combos_amt,
+			stops_size);
+	out = array_duplicate(combos[best_is_at_index], stops_size);
 	combos_free(combos, combos_amt);
 	return (out);
 }

@@ -64,7 +64,7 @@ static void	sort(t_bench *bench, t_stack *apt, t_stack *bpt)
 	if (bench->strategy == STRATEGIES_SIMPLE)
 		minmax(apt, bpt);
 	else if (bench->strategy == STRATEGIES_MEDIUM)
-		bucketsort(apt, bpt, bucketsort_init(apt));
+		bucketsort(apt, bpt, bucketsort_init(apt, bpt));
 	else
 		radix_sort(apt, bpt);
 }
@@ -96,7 +96,5 @@ int	main(int ac, char **av)
 }
 
 // aggiustare makefile
-// fixare print del bench.
-// vedere leak in bucketsort
+// fixare print del bench to stderr
 // vedere tutti i nullcheck
-// ridare un nome alla funzione "foo"

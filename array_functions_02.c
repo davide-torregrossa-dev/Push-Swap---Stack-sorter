@@ -50,8 +50,7 @@ int	**array_get_rcombos(int *arr, int size, int iterations)
 	i = 0;
 	while (i < iterations)
 	{
-		result[i] = malloc(sizeof(int) * size);
-		array_duplicate(arr, result[i], size);
+		result[i] = array_duplicate(arr, size);
 		if (i)
 			array_shuffle(result[i], size, i);
 		i++;
