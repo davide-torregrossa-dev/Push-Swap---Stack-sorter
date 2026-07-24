@@ -78,6 +78,6 @@ void	bench_print(t_bench bench)
 	ft_printf(2, "[bench] total_ops: %d\n", bench_get_total_ops(bench));
 	ft_printf(2, "[bench] sa: %d sb: %d ss: %d pa: %d pb: %d\n", bench.sa,
 		bench.sb, bench.ss, bench.pa, bench.pb);
-	ft_printf(2, "[bench] ra: %d rb: %d rr: %d rra: %d rrb: %d rrr: %d",
+	ft_printf(2, "[bench] ra: %d rb: %d rr: %d rra: %d rrb: %d rrr: %d\n",
 		bench.ra, bench.rb, bench.rr, bench.rra, bench.rrb, bench.rrr);
 }
