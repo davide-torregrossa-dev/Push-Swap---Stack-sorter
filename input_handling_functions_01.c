@@ -32,6 +32,12 @@ char	**flagnames_array_create(void)
 	return (flags);
 }
 
+static void	free_and_fail(char **flagnames)
+{
+	free(flagnames);
+	fail();
+}
+
 int	input_get_strategy(char **av, int bench_flag_found)
 {
 	char	**flagnames;
@@ -43,16 +49,18 @@ int	input_get_strategy(char **av, int bench_flag_found)
 	flag_index = array_find_string(flagnames, 4, av[arg_index]);
 	if (flag_index == -1)
 	{
+		if (av[arg_index] != NULL)
+		{
+			if (!av[arg_index][0])
+				free_and_fail(flagnames);
+		}
 		if (string_has_space(av[arg_index]))
 		{
 			free(flagnames);
 			return (STRATEGIES_ADAPTIVE);
 		}
 		if (!string_is_number(av[arg_index]))
-		{
-			free(flagnames);
-			fail();
-		}
+			free_and_fail(flagnames);
 		flag_index = STRATEGIES_ADAPTIVE;
 	}
 	free(flagnames);

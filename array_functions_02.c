@@ -30,7 +30,7 @@ void	array_shuffle(int *arr, int size, int seed)
 	current_seed = (unsigned int)seed;
 	i = size - 1;
 	while (i > 0)
-	{	
+	{
 		j = seedgen(&current_seed) % (i + 1);
 		temp = arr[i];
 		arr[i] = arr[j];

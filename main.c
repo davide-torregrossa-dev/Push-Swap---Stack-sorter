@@ -79,6 +79,8 @@ int	main(int ac, char **av)
 	a.bench = &bench;
 	b.bench = &bench;
 	program_and_mainstack_init(av, ac, &cli_params, &a);
+	if (a.current_size == 0)
+		fail();
 	stack_init(&b, 'b', NULL, 0);
 	bench_init(&bench, stack_calc_disorder(&a), cli_params.strategy);
 	if (bench.strategy_is_from_adaptive)
@@ -90,7 +92,6 @@ int	main(int ac, char **av)
 	}
 	else
 		sort(&bench, &a, &b);
-	stack_print(a);
 	bench_print(bench);
 	free_the_stacks(&a, &b);
 }
