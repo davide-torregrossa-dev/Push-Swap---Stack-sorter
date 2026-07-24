@@ -12,13 +12,13 @@
 
 #include "push_swap.h"
 
-int	print_char(int c)
+int	print_char(int fd, int c)
 {
-	write(1, &c, 1);
+	write(fd, &c, 1);
 	return (1);
 }
 
-int	print_string(char *str)
+int	print_string(int fd, char *str)
 {
 	size_t	i;
 
@@ -27,7 +27,7 @@ int	print_string(char *str)
 	i = 0;
 	while (str[i])
 	{
-		write(1, &str[i], 1);
+		write(fd, &str[i], 1);
 		i++;
 	}
 	return (i);

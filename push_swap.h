@@ -132,14 +132,14 @@ int			factorialof(int n);
 int			*router_get_best_order(t_stack *stackpt, int *stops,
 				int stops_size);
 
-int			ft_printf(const char *str, ...);
-int			ft_printf_dispatch(va_list var, char c);
-int			print_char(int c);
-int			print_string(char *str);
-int			print_uint(unsigned int n);
-int			print_dec(int n);
-int			print_hex(unsigned long n, int upper);
-int			print_ptr(void *ptr);
+int			ft_printf(int fd, const char *str, ...);
+int			ft_printf_dispatch(int fd, va_list var, char c);
+int			print_char(int fd, int c);
+int			print_string(int fd, char *str);
+int			print_uint(int fd, unsigned int n);
+int			print_dec(int fd, int n);
+int			print_hex(int fd, unsigned long n, int upper);
+int			print_ptr(int fd, void *ptr);
 
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 

@@ -56,12 +56,12 @@ static void	bench_print_disorder(t_bench bench)
 	decs = (int)((pct - intt) * 100);
 	if (decs < 0)
 		decs = -decs;
-	ft_printf("[bench] disorder: %d.", intt);
+	ft_printf(2, "[bench] disorder: %d.", intt);
 	if (decs < 10)
-		ft_printf("0%d", decs);
+		ft_printf(2, "0%d", decs);
 	else
-		ft_printf("%d", decs);
-	ft_printf("%%\n");
+		ft_printf(2, "%d", decs);
+	ft_printf(2, "%%\n");
 }
 
 void	bench_print(t_bench bench)
@@ -69,15 +69,15 @@ void	bench_print(t_bench bench)
 	if (!bench.is_active)
 		return ;
 	bench_print_disorder(bench);
-	ft_printf("[bench] strategy:");
+	ft_printf(2, "[bench] strategy:");
 	if (bench.strategy_is_from_adaptive)
-		ft_printf(" Adaptive \\");
+		ft_printf(2, " Adaptive \\");
 	else
-		ft_printf(" Forced");
-	ft_printf(" %s\n", get_strategy_name(bench.strategy));
-	ft_printf("[bench] total_ops: %d\n", bench_get_total_ops(bench));
-	ft_printf("[bench] sa: %d sb: %d ss: %d pa: %d pb: %d\n", bench.sa,
+		ft_printf(2, " Forced");
+	ft_printf(2, " %s\n", get_strategy_name(bench.strategy));
+	ft_printf(2, "[bench] total_ops: %d\n", bench_get_total_ops(bench));
+	ft_printf(2, "[bench] sa: %d sb: %d ss: %d pa: %d pb: %d\n", bench.sa,
 		bench.sb, bench.ss, bench.pa, bench.pb);
-	ft_printf("[bench] ra: %d rb: %d rr: %d rra: %d rrb: %d rrr: %d", bench.ra,
-		bench.rb, bench.rr, bench.rra, bench.rrb, bench.rrr);
+	ft_printf(2, "[bench] ra: %d rb: %d rr: %d rra: %d rrb: %d rrr: %d",
+		bench.ra, bench.rb, bench.rr, bench.rra, bench.rrb, bench.rrr);
 }

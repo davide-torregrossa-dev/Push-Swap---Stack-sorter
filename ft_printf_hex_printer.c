@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int	print_hex(unsigned long n, int upper)
+int	print_hex(int fd, unsigned long n, int upper)
 {
 	int		out;
 	char	*ref;
@@ -24,22 +24,22 @@ int	print_hex(unsigned long n, int upper)
 	else
 		ref = "0123456789abcdef";
 	if (n >= 16)
-		out += print_hex(n / 16, upper);
+		out += print_hex(fd, n / 16, upper);
 	c = ref[n % 16];
-	out += write(1, &c, 1);
+	out += write(fd, &c, 1);
 	return (out);
 }
 
-int	print_ptr(void *ptr)
+int	print_ptr(int fd, void *ptr)
 {
 	unsigned long	n;
 	int				out;
 
 	out = 0;
 	if (!ptr)
-		return (write(1, "(nil)", 5));
+		return (write(fd, "(nil)", 5));
 	n = (unsigned long)ptr;
-	out += write(1, "0x", 2);
-	out += print_hex(n, 0);
+	out += write(fd, "0x", 2);
+	out += print_hex(fd, n, 0);
 	return (out);
 }

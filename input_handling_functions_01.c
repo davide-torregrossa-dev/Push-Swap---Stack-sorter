@@ -14,7 +14,7 @@
 
 void	fail(void)
 {
-	write(1, "Error\n", 6);
+	write(2, "Error\n", 6);
 	exit(1);
 }
 
@@ -58,4 +58,3 @@ int	input_get_strategy(char **av, int bench_flag_found)
 	free(flagnames);
 	return (flag_index);
 }
-

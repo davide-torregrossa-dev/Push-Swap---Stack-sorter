@@ -12,25 +12,25 @@
 
 #include "push_swap.h"
 
-static int	print_num(long n)
+static int	print_num(int fd, long n)
 {
 	int		out;
 	char	c;
 
 	out = 0;
 	if (n > 9)
-		out += print_num(n / 10);
+		out += print_num(fd, n / 10);
 	c = (n % 10) + '0';
-	out += write(1, &c, 1);
+	out += write(fd, &c, 1);
 	return (out);
 }
 
-int	print_uint(unsigned int n)
+int	print_uint(int fd, unsigned int n)
 {
-	return (print_num((long)n));
+	return (print_num(fd, (long)n));
 }
 
-int	print_dec(int n)
+int	print_dec(int fd, int n)
 {
 	int		out;
 	long	current_n;
@@ -38,8 +38,8 @@ int	print_dec(int n)
 	out = 0;
 	current_n = n;
 	if (current_n < 0)
-		out += write(1, "-", 1);
+		out += write(fd, "-", 1);
 	current_n *= ((n >= 0) * 2) - 1;
-	out += print_num(current_n);
+	out += print_num(fd, current_n);
 	return (out);
 }

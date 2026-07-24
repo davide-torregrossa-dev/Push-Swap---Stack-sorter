@@ -95,6 +95,4 @@ int	main(int ac, char **av)
 	free_the_stacks(&a, &b);
 }
 
-// aggiustare makefile
 // fixare print del bench to stderr
-// vedere tutti i nullcheck

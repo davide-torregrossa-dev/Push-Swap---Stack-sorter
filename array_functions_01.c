@@ -86,19 +86,19 @@ int	array_find_max_index(int *arr, int size)
 	return (maxi);
 }
 
-int 	*array_duplicate(int *arr, int size)
+int	*array_duplicate(int *arr, int size)
 {
 	int	i;
-	int *destarr;
+	int	*destarr;
 
 	destarr = malloc(size * sizeof(int));
 	if (!destarr)
-		return NULL;
+		return (NULL);
 	i = 0;
 	while (i < size)
 	{
 		destarr[i] = arr[i];
 		i++;
 	}
-	return destarr;
+	return (destarr);
 }
