@@ -244,25 +244,10 @@ When accessing multiple elements (like min and max), the order matters. This alg
 
 ### Classic References
 
-1. **Stack Data Structure**
-   - [Wikipedia: Stack (abstract data type)](https://en.wikipedia.org/wiki/Stack_(abstract_data_type))
-   - Fundamental concepts of LIFO (Last-In-First-Out) structures
-
-2. **Sorting Algorithms**
-   - [Sorting Algorithm Comparison](https://en.wikipedia.org/wiki/Sorting_algorithm)
-   - Time and space complexity analysis of various sorting approaches
-
-3. **Radix Sort**
-   - [Wikipedia: Radix Sort](https://en.wikipedia.org/wiki/Radix_sort)
-   - In-depth explanation of non-comparative sorting techniques
-
-4. **Bucket Sort**
-   - [Wikipedia: Bucket Sort](https://en.wikipedia.org/wiki/Bucket_sort)
-   - Distribution-based sorting approaches
-
-5. **Algorithm Analysis**
-   - Big O Notation and complexity analysis fundamentals
-   - Time vs. Space tradeoff considerations
+- **r/C_Programming** - Community discussions on C programming practices and sorting algorithms
+- **Stack Overflow** - Practical solutions and algorithm implementation examples
+- **Linux man pages** - Documentation for system calls and C library functions
+- **Peer implementations** - Learning from other students' approaches and code reviews
 
 ### AI Usage
 
@@ -404,4 +389,3 @@ The project showcases deep understanding of:
 - Adaptive algorithm selection
 - Performance optimization and benchmarking
 - Clean code organization and memory management
-
