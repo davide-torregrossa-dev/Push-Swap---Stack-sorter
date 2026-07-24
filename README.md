@@ -300,13 +300,12 @@ All dynamic memory allocations are properly freed:
 ### Compilation Flags
 
 ```
--Wall -Wextra -Werror -g
+-Wall -Wextra -Werror
 ```
 
 - **-Wall**: Enable all standard warnings
 - **-Wextra**: Enable extra warnings
 - **-Werror**: Treat all warnings as errors (ensures code quality)
-- **-g**: Include debugging symbols
 
 ---
 
