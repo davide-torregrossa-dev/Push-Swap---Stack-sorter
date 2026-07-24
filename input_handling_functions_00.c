@@ -75,14 +75,17 @@ static int	*atoi_batch_string(char **strings)
 	{
 		n = atoi_check(strings[i]);
 		if (array_find_int(out, i, n) != -1)
+		{
+			free(out);
 			fail();
+		}
 		out[i] = n;
 		i++;
 	}
 	return (out);
 }
 
-static int	process_space_arg(char *arg, t_stack *stack_apt)
+static void	process_space_arg(char *arg, t_stack *stack_apt)
 {
 	char	**tokens;
 	int		size;
@@ -97,7 +100,6 @@ static int	process_space_arg(char *arg, t_stack *stack_apt)
 	content = atoi_batch_string(tokens);
 	free_split(tokens);
 	stack_init(stack_apt, 'a', content, size);
-	return (1);
 }
 
 void	program_and_mainstack_init(char **av, int ac,
